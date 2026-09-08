@@ -1,0 +1,16 @@
+# Cloudflare Pages headers.
+# https://developers.cloudflare.com/pages/configuration/headers/
+
+# Long-cache the static assets (they are content-stable; change the
+# filename if you ever need to bust the cache).
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The HTML should always be revalidated so edits go live immediately.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

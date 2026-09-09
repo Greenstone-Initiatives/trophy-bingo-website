@@ -9,14 +9,17 @@ The **trophybingo.com** landing page — a single static page (`index.html` +
 the **Trophy Bingo** game hosted on iWin. The page embeds the real game in an
 `<iframe>` pointing at `https://iwin.com/free-games/play/trophy-bingo`.
 
-Deployed via **Cloudflare Pages** connected to
-`Greenstone-Initiatives/trophy-bingo-website`; pushes to `main` auto-deploy.
-See `README.md` for the full picture.
+Hosted on **Cloudflare** (static assets, no Worker code of our own). Deploys
+are a direct upload from this folder — `npx wrangler deploy` — configured by
+`wrangler.jsonc`. Live at <https://trophy-bingo.gsii.workers.dev> (custom
+domain `www.trophybingo.com` to be attached). See `README.md` for the full
+picture.
 
 ## Rules of the road
 
 - **No build tooling.** Keep it plain HTML/CSS/vanilla-JS so Joe and James can
   edit directly on GitHub. Do not add a bundler, framework, or `package.json`.
+  (`wrangler.jsonc` is deploy config, not a build step.)
 - **Paths are relative and flat.** Assets live in `assets/`. Don't introduce a
   `pages/` structure.
 - **The game embed is the point.** The play button lazy-loads the iWin iframe

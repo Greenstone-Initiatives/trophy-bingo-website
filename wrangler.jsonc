@@ -1,0 +1,12 @@
+{
+  // Cloudflare deploy config for the Trophy Bingo landing page.
+  // This is a static site served straight from the repo root — there is
+  // no build step. Deploy with:  npx wrangler deploy
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "trophy-bingo",
+  "compatibility_date": "2026-09-08",
+  "observability": { "enabled": true },
+  "assets": {
+    "directory": "."
+  }
+}

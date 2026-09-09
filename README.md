@@ -66,23 +66,39 @@ python -m http.server 8000
 
 (The embedded game only loads over `http`/`https`, not from a `file://` path.)
 
-## Deploying (Cloudflare Pages)
+## Deploying (Cloudflare)
 
-The site is served by **Cloudflare Pages**, connected to this GitHub repo.
-Every push to `main` deploys automatically.
+The site is hosted on **Cloudflare** as static assets (no server code of our
+own). It is **live now** at:
 
-First-time setup (once, in the Cloudflare dashboard):
+- **<https://trophy-bingo.gsii.workers.dev>** (the Cloudflare URL)
+- **www.trophybingo.com** — *once the custom domain is attached (see below)*
 
-1. **Workers & Pages → Create → Pages → Connect to Git** and pick this repo
-   (`Greenstone-Initiatives/trophy-bingo-website`).
-2. Build settings: **Framework preset: None**, **Build command: _(empty)_**,
-   **Build output directory: `/`** (the site is already static at the root).
-3. Deploy. Pages gives you a `*.pages.dev` URL to check.
-4. **Custom domains → Set up a custom domain** → add `www.trophybingo.com`
-   (and `trophybingo.com` with a redirect to `www`). Point the domain's DNS at
-   Cloudflare and the certificate is issued automatically.
+### Publish an update
 
-After that, editing is just: commit to `main` → live.
+From this folder, on the `James Hursthouse (GSII)` Cloudflare account:
+
+```bash
+npx wrangler deploy
+```
+
+That uploads the current files and goes live in a few seconds. Config lives in
+`wrangler.jsonc`; `.assetsignore` keeps non-site files (README, config) from
+being served. There is no build step.
+
+### Point trophybingo.com at it (one-time)
+
+In the Cloudflare dashboard, open the **trophy-bingo** project → **Settings →
+Domains → Add** and add `www.trophybingo.com` (and `trophybingo.com`,
+redirecting to `www`). Because the domain's DNS is already on Cloudflare, the
+certificate is issued automatically and the old WordPress page is replaced.
+
+### Optional: auto-deploy on push
+
+If you'd rather deploy on every `git push` instead of running the command,
+connect the repo in the dashboard (**Workers & Pages → the project → Settings →
+Builds → Connect to Git**), framework preset **None**, build command empty,
+output directory `/`. Direct `wrangler deploy` keeps working alongside it.
 
 ## Assets & credit
 

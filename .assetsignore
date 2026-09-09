@@ -1,0 +1,9 @@
+# Files in the repo root that should NOT be served as part of the website.
+# (Cloudflare already skips .git automatically.)
+wrangler.jsonc
+.assetsignore
+.gitignore
+.gitattributes
+README.md
+CLAUDE.md
+node_modules

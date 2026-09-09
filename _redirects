@@ -1,0 +1,5 @@
+# Cloudflare redirects.  https://developers.cloudflare.com/pages/configuration/redirects/
+# The site's top page IS Trophy Bingo, so /trophybingo is a friendly alias
+# for the root.
+/trophybingo      /   302
+/trophybingo/     /   302

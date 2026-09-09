@@ -1,10 +1,12 @@
-# trophybingo.com
+# Trophy Bingo landing page
 
 The landing page for **Trophy Bingo** — the free dog-rescue action-bingo game.
-Its job is to get visitors playing: the page embeds the full game and points
-everything at iWin, where Trophy Bingo actually lives.
+Its job is to get visitors playing: it shows off the game and hands everyone off
+to iWin, where Trophy Bingo actually lives.
 
-- **Live game (embedded here):** <https://iwin.com/free-games/play/trophy-bingo>
+Intended home: **greenstone.games** (root) and **greenstone.games/trophybingo**.
+
+- **Play the game:** <https://iwin.com/free-games/play/trophy-bingo>
 - **Game page on iWin:** <https://iwin.com/games/trophy-bingo>
 
 ## What this is
@@ -29,29 +31,29 @@ assets/
 
 ## How the game is delivered
 
-The big **Play** button loads the real iWin game in an `<iframe>` right on the
-page (`index.html` → `GAME_URL`). Because the frame points at `iwin.com`, the
-player is first-party on iWin **inside the frame**, so coins, memberships, the
-Spin Wheel and everything else work exactly as they do on iWin.
+Every **Play** button opens the full game on iWin
+(`https://iwin.com/free-games/play/trophy-bingo`) in a new tab. The game is
+**not** embedded — we tried an in-page `<iframe>` but it was janky across
+browsers (third-party-cookie limits broke sign-in on Safari, iWin's own ads and
+chrome crowded the frame, and it was cramped on mobile). Handing off to iWin
+keeps coins, memberships and the Spin Wheel working perfectly, because the
+player is first-party on iWin.
 
-The game is **click-to-load** on purpose: it keeps the landing page fast and
-avoids autoplaying iWin's pre-game ad before the visitor asks to play.
-
-> **Heads-up on browsers:** a few browsers (notably Safari, and Chrome with
-> third-party cookies disabled) restrict cookies inside cross-site frames,
-> which can interfere with staying signed in _in the frame_. That's why every
-> screen keeps a visible **"Open on iWin ↗"** link as a fallback — it opens the
-> same game first-party on iWin where sign-in always works.
+Any `utm_*` / `fbclid` params on the incoming ad link are forwarded onto the
+iWin links, and each Play click fires the Meta Pixel `Lead` + `PlayClicked`
+events, so paid traffic stays measurable.
 
 ## Editing
 
 Common changes:
 
 - **Copy / headlines** — edit the text in `index.html`.
-- **Where Play points** — change `GAME_URL` in the `<script>` at the bottom of
-  `index.html` (and the two footer links).
+- **Where Play points** — every Play link is a normal `<a href="https://iwin.com/…">`
+  with `class="js-play"`; change the URL on those anchors.
 - **Colours / spacing** — the palette is CSS variables at the top of
   `styles.css` (`:root { --pink … }`).
+- **Meta Pixel** — paste your Pixel ID into `META_PIXEL_ID` near the top of
+  `index.html` (tracking stays off until you do).
 - **Screenshots** — drop new images in `assets/screenshots/` and update the
   `<img>` tags in the "Take a peek" section.
 
@@ -64,15 +66,15 @@ python -m http.server 8000
 # then open http://localhost:8000
 ```
 
-(The embedded game only loads over `http`/`https`, not from a `file://` path.)
-
 ## Deploying (Cloudflare)
 
 The site is hosted on **Cloudflare** as static assets (no server code of our
 own). It is **live now** at:
 
 - **<https://trophy-bingo.gsii.workers.dev>** (the Cloudflare URL)
-- **www.trophybingo.com** — *once the custom domain is attached (see below)*
+- **greenstone.games** — *once the domain is moved to Cloudflare (see below)*
+
+`/trophybingo` is a friendly alias that redirects to the root (see `_redirects`).
 
 ### Publish an update
 
@@ -86,12 +88,32 @@ That uploads the current files and goes live in a few seconds. Config lives in
 `wrangler.jsonc`; `.assetsignore` keeps non-site files (README, config) from
 being served. There is no build step.
 
-### Point trophybingo.com at it (one-time)
+### Point greenstone.games at it
 
-In the Cloudflare dashboard, open the **trophy-bingo** project → **Settings →
-Domains → Add** and add `www.trophybingo.com` (and `trophybingo.com`,
-redirecting to `www`). Because the domain's DNS is already on Cloudflare, the
-certificate is issued automatically and the old WordPress page is replaced.
+greenstone.games is registered at **GoDaddy** and must be **moved to Cloudflare**
+before a Worker can serve it (Workers custom domains require the zone to live on
+Cloudflare). One-time:
+
+1. **Cloudflare dashboard → Add a domain →** `greenstone.games` (Free plan). It
+   imports the existing DNS and gives you **two Cloudflare nameservers**.
+2. **At GoDaddy → greenstone.games → Nameservers →** replace
+   `ns21/ns22.domaincontrol.com` with the two Cloudflare nameservers. Propagation
+   is usually minutes to a couple of hours.
+3. Once Cloudflare shows the zone **Active**, add the custom domain to the Worker
+   by putting this in `wrangler.jsonc` and running `npx wrangler deploy`:
+
+   ```jsonc
+   "routes": [
+     { "pattern": "greenstone.games",     "custom_domain": true },
+     { "pattern": "www.greenstone.games", "custom_domain": true }
+   ]
+   ```
+
+   Cloudflare issues the certificate automatically. The root then serves this
+   page, and `greenstone.games/trophybingo` redirects to it.
+
+The `routes` block is left out of `wrangler.jsonc` until the zone is on
+Cloudflare — adding it before then makes `wrangler deploy` fail.
 
 ### Optional: auto-deploy on push
 

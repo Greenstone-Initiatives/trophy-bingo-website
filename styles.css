@@ -160,6 +160,8 @@ a { color: var(--pink-deep); }
 /* ---------- Game embed ---------- */
 .stage {
   position: relative;
+  display: block;
+  text-decoration: none;
   width: 100%;
   max-width: 1120px;
   margin: 8px auto 0;
@@ -168,7 +170,10 @@ a { color: var(--pink-deep); }
   box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 0 0 6px rgba(255,255,255,.6);
   overflow: hidden;
   aspect-ratio: 16 / 10;
+  transition: transform .1s ease, box-shadow .1s ease;
 }
+.stage--link:hover { transform: translateY(-2px); box-shadow: 0 26px 70px rgba(0,0,0,.4), 0 0 0 6px rgba(255,255,255,.75); }
+.hero__inner .btn--big { margin-top: 24px; }
 .stage__frame { width: 100%; height: 100%; border: 0; display: block; }
 
 /* Click-to-play facade (loads the game only when the visitor asks) */

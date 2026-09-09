@@ -24,6 +24,24 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Meta (Facebook/Instagram) Pixel.
+       Tracking is OFF until you paste your Pixel ID below. Create one in
+       Meta Events Manager, then set META_PIXEL_ID and redeploy. Nothing
+       loads or is sent while the ID is empty. -->
+  <script>
+    window.META_PIXEL_ID = ""; // <-- paste your Pixel ID here (e.g. "1234567890")
+    (function () {
+      if (!window.META_PIXEL_ID) return;
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', window.META_PIXEL_ID);
+      fbq('track', 'PageView');
+    })();
+  </script>
 </head>
 <body>
 
@@ -149,6 +167,16 @@
     // Year
     document.getElementById('yr').textContent = new Date().getFullYear();
 
+    // Forward ad tracking params (utm_*, fbclid) from the ad link on to the
+    // iWin links, so iWin sees where the traffic came from too.
+    (function () {
+      var qs = window.location.search;
+      if (!qs || qs.length < 2) return;
+      document.querySelectorAll('a[href^="https://iwin.com"]').forEach(function (a) {
+        a.href += (a.href.indexOf('?') === -1 ? '?' : '&') + qs.slice(1);
+      });
+    })();
+
     // Click-to-play: swap the poster facade for the live game iframe.
     // Lazy-loading the game keeps the landing page fast and avoids
     // autoplaying iWin's in-game ads before the visitor opts in.
@@ -157,6 +185,9 @@
       var facade = document.getElementById('facade');
       if (!facade) return;
       facade.addEventListener('click', function () {
+        // Conversion signal: the visitor chose to play. Meta can optimise
+        // delivery toward this once the Pixel ID is set.
+        if (window.fbq) { fbq('track', 'Lead'); fbq('trackCustom', 'PlayClicked'); }
         var iframe = document.createElement('iframe');
         iframe.className = 'stage__frame';
         iframe.src = GAME_URL;

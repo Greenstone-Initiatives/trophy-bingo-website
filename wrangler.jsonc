@@ -5,7 +5,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "trophy-bingo",
   "compatibility_date": "2026-09-08",
+  "workers_dev": true,
   "observability": { "enabled": true },
+  "routes": [
+    { "pattern": "greenstone.games", "custom_domain": true },
+    { "pattern": "www.greenstone.games", "custom_domain": true }
+  ],
   "assets": {
     "directory": "."
   }

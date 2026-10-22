@@ -8,13 +8,13 @@
 
   <link rel="icon" type="image/png" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/favicon.png">
-  <link rel="canonical" href="https://greenstone.games/">
+  <link rel="canonical" href="https://greenstone.games/trophybingo/">
 
   <!-- Open Graph / social -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Trophy Bingo — Play the free dog-rescue bingo adventure">
   <meta property="og:description" content="Team up with Goldie the golden retriever and friends for some bonus bingo fun! Play free.">
-  <meta property="og:url" content="https://greenstone.games/">
+  <meta property="og:url" content="https://greenstone.games/trophybingo/">
   <meta property="og:image" content="https://greenstone.games/assets/tile.png">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -68,6 +68,7 @@
       <div class="hero__scrim"></div>
 
       <div class="wrap hero__inner">
+        <img class="hero__logo" src="/assets/logo.png" alt="Trophy Bingo" width="438" height="198">
         <span class="hero__tag">⭐ 4.28 / 5 &nbsp;•&nbsp; Free to play</span>
         <h1>Join Goldie on the bingo adventure of a lifetime!</h1>
         <p class="sub">Team up with Goldie the golden retriever &amp; friends for some bonus bingo fun. Rescue lost dogs, spin the wheel, and win big.</p>
@@ -161,6 +162,18 @@
   <script>
     // Year
     document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // The big hero logo stands in for the header logo; the header logo fades
+    // in once the hero logo scrolls out of view.
+    (function () {
+      var header = document.querySelector('.site-header');
+      var heroLogo = document.querySelector('.hero__logo');
+      if (!header || !heroLogo || !('IntersectionObserver' in window)) return;
+      header.classList.add('brand-hidden');
+      new IntersectionObserver(function (entries) {
+        header.classList.toggle('brand-hidden', entries[0].isIntersecting);
+      }, { rootMargin: '-68px 0px 0px 0px' }).observe(heroLogo);
+    })();
 
     // Forward ad tracking params (utm_*, fbclid) from the ad link on to every
     // iWin link, so iWin sees where the traffic came from too.

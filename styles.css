@@ -68,7 +68,8 @@ a { color: var(--pink-deep); }
 }
 .btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
 .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 rgba(0,0,0,.14), var(--shadow-sm); }
-.btn--big { font-size: 1.4rem; padding: 1em 2em; }
+.btn--big { font-size: clamp(1.15rem, 2.8svh, 1.4rem); padding: 1em 2em; }
+@media (max-width: 400px) { .btn--big { padding: .95em 1.4em; } }
 .btn--sky  { --btn-bg: var(--sky); --btn-bg2: var(--sky-deep); }
 .btn--ghost {
   color: var(--pink-deep);
@@ -94,6 +95,8 @@ a { color: var(--pink-deep); }
   min-height: 68px;
 }
 .brand img { height: 44px; width: auto; }
+.brand { transition: opacity .25s ease, transform .25s ease; }
+.site-header.brand-hidden .brand { opacity: 0; transform: translateY(-6px); pointer-events: none; }
 .nav { display: flex; align-items: center; gap: 22px; }
 .nav a.navlink {
   font-family: var(--font-head);
@@ -108,8 +111,13 @@ a { color: var(--pink-deep); }
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 46px 0 60px;
+  padding: clamp(14px, 2.5svh, 34px) 0 clamp(20px, 3.5svh, 44px);
   isolation: isolate;
+  /* Fill the first screen below the header so the video gets the whole stage */
+  min-height: calc(100vh - 71px);
+  min-height: calc(100svh - 71px);
+  display: flex;
+  align-items: center;
 }
 .hero__video, .hero__scrim {
   position: absolute;
@@ -123,9 +131,21 @@ a { color: var(--pink-deep); }
   z-index: -1;
   background:
     radial-gradient(120% 90% at 50% 0%, rgba(255,61,127,.30), transparent 60%),
-    linear-gradient(180deg, rgba(58,43,77,.42), rgba(58,43,77,.62));
+    linear-gradient(180deg, rgba(58,43,77,.30), rgba(58,43,77,.52));
 }
-.hero__inner { text-align: center; color: #fff; }
+.hero__inner {
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero__logo {
+  height: clamp(80px, 17svh, 184px);
+  width: auto;
+  margin: 0 auto clamp(8px, 1.6svh, 16px);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+}
 .hero__tag {
   display: inline-flex;
   align-items: center;
@@ -137,23 +157,23 @@ a { color: var(--pink-deep); }
   padding: .4em 1em;
   border-radius: 999px;
   box-shadow: var(--shadow-sm);
-  margin-bottom: 18px;
+  margin-bottom: clamp(10px, 1.8svh, 18px);
   font-size: .95rem;
 }
 .hero h1 {
   font-family: var(--font-head);
   font-weight: 600;
-  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+  font-size: clamp(1.6rem, min(4.6vw, 5.4svh), 3.1rem);
   line-height: 1.08;
   margin: 0 auto 10px;
-  max-width: 16ch;
+  max-width: 22ch;
   text-shadow: 0 3px 0 rgba(0,0,0,.18);
 }
 .hero p.sub {
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-size: clamp(1rem, min(2.2vw, 2.6svh), 1.35rem);
   font-weight: 600;
-  margin: 0 auto 24px;
-  max-width: 42ch;
+  margin: 0 auto clamp(12px, 2.2svh, 24px);
+  max-width: 52ch;
   text-shadow: 0 2px 6px rgba(0,0,0,.4);
 }
 
@@ -162,18 +182,19 @@ a { color: var(--pink-deep); }
   position: relative;
   display: block;
   text-decoration: none;
-  width: 100%;
-  max-width: 1120px;
-  margin: 8px auto 0;
-  border-radius: var(--radius-lg);
-  background: #241a33;
-  box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 0 0 6px rgba(255,255,255,.6);
-  overflow: hidden;
+  /* Sized off the viewport height so the Play button below always lands on the first screen */
+  height: clamp(110px, 21svh, 240px);
   aspect-ratio: 16 / 10;
+  max-width: 88vw;
+  margin: 4px auto 0;
+  border-radius: var(--radius);
+  background: #241a33;
+  box-shadow: 0 16px 44px rgba(0,0,0,.35), 0 0 0 5px rgba(255,255,255,.6);
+  overflow: hidden;
   transition: transform .1s ease, box-shadow .1s ease;
 }
-.stage--link:hover { transform: translateY(-2px); box-shadow: 0 26px 70px rgba(0,0,0,.4), 0 0 0 6px rgba(255,255,255,.75); }
-.hero__inner .btn--big { margin-top: 24px; }
+.stage--link:hover { transform: translateY(-2px); box-shadow: 0 22px 56px rgba(0,0,0,.4), 0 0 0 5px rgba(255,255,255,.75); }
+.hero__inner .btn--big { margin-top: clamp(14px, 2.6svh, 26px); }
 .stage__frame { width: 100%; height: 100%; border: 0; display: block; }
 
 /* Click-to-play facade (loads the game only when the visitor asks) */
@@ -203,8 +224,9 @@ a { color: var(--pink-deep); }
   gap: 14px;
   text-align: center;
 }
+.facade__play { gap: clamp(4px, 1svh, 12px); }
 .facade__disc {
-  width: 92px; height: 92px;
+  width: clamp(46px, 8svh, 76px); height: clamp(46px, 8svh, 76px);
   border-radius: 999px;
   background: linear-gradient(180deg, var(--pink), var(--pink-deep));
   display: grid; place-items: center;
@@ -212,14 +234,14 @@ a { color: var(--pink-deep); }
   transition: transform .1s ease;
 }
 .facade:hover .facade__disc { transform: scale(1.06); }
-.facade__disc svg { width: 40px; height: 40px; margin-left: 5px; }
+.facade__disc svg { width: 46%; height: 46%; margin-left: 8%; }
 .facade__label {
   font-family: var(--font-head);
   font-weight: 600;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 2.4svh, 1.35rem);
   text-shadow: 0 2px 8px rgba(0,0,0,.5);
 }
-.facade__note { font-weight: 700; font-size: .95rem; opacity: .92; text-shadow: 0 2px 6px rgba(0,0,0,.5); }
+.facade__note { font-weight: 700; font-size: clamp(.72rem, 1.6svh, .9rem); opacity: .92; text-shadow: 0 2px 6px rgba(0,0,0,.5); }
 
 .stage-meta {
   max-width: 1120px;

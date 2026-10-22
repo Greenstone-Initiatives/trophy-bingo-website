@@ -1,5 +1,5 @@
-# Cloudflare Pages headers.
-# https://developers.cloudflare.com/pages/configuration/headers/
+# Cloudflare static-asset headers.
+# https://developers.cloudflare.com/workers/static-assets/headers/
 
 # Long-cache the static assets (they are content-stable; change the
 # filename if you ever need to bust the cache).
@@ -10,7 +10,7 @@
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
 
-/
+/trophybingo/
   Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin

@@ -4,7 +4,7 @@ The landing page for **Trophy Bingo** — the free dog-rescue action-bingo game.
 Its job is to get visitors playing: it shows off the game and hands everyone off
 to iWin, where Trophy Bingo actually lives.
 
-Intended home: **greenstone.games** (root) and **greenstone.games/trophybingo**.
+Home: **greenstone.games** and **greenstone.games/trophybingo/** (same page).
 
 - **Play the game:** <https://iwin.com/free-games/play/trophy-bingo>
 - **Game page on iWin:** <https://iwin.com/games/trophy-bingo>
@@ -16,9 +16,13 @@ framework, no build step, no package manager. You can edit it directly on
 GitHub and the change is live in seconds.
 
 ```
-index.html        The whole page
+trophybingo/
+  index.html      The whole page (served at /trophybingo/)
+  dogs.js         The pack: names, powers, bios, breed facts
+worker.js         Members sign-up (/api/join) + staging noindex
 styles.css        All styling (candy/playful brand)
-_headers          Cloudflare Pages caching + security headers
+_headers          Caching + security headers
+_redirects        /index.html → /
 assets/
   logo.png        Trophy Bingo wordmark
   favicon.png     App-icon (Goldie + B7 ball) — favicon & social image
@@ -27,6 +31,8 @@ assets/
   hero.png        Game-board still (video poster + play-button backdrop)
   bg-candy.jpg    Original candy border texture (spare)
   screenshots/    In-game screenshots (Spin Wheel, board, etc.)
+  dogs/           A face for every dog in the pack
+  story/          Ernest, Chester, Goldie and the story still
 ```
 
 ## How the game is delivered
@@ -47,13 +53,13 @@ events, so paid traffic stays measurable.
 
 Common changes:
 
-- **Copy / headlines** — edit the text in `index.html`.
+- **Copy / headlines** — edit the text in `trophybingo/index.html`.
 - **Where Play points** — every Play link is a normal `<a href="https://iwin.com/…">`
   with `class="js-play"`; change the URL on those anchors.
 - **Colours / spacing** — the palette is CSS variables at the top of
   `styles.css` (`:root { --pink … }`).
 - **Meta Pixel** — paste your Pixel ID into `META_PIXEL_ID` near the top of
-  `index.html` (tracking stays off until you do).
+  `trophybingo/index.html` (tracking stays off until you do).
 - **Screenshots** — drop new images in `assets/screenshots/` and update the
   `<img>` tags in the "Take a peek" section.
 
@@ -63,64 +69,40 @@ No tooling needed — just serve the folder:
 
 ```bash
 python -m http.server 8000
-# then open http://localhost:8000
+# then open http://localhost:8000/trophybingo/
 ```
 
 ## Deploying (Cloudflare)
 
-The site is hosted on **Cloudflare** as static assets (no server code of our
-own). It is **live now** at:
+The site is static assets on a Cloudflare Worker (`trophy-bingo`), connected
+to this repo through Workers Builds:
 
-- **<https://trophy-bingo.gsii.workers.dev>** (the Cloudflare URL)
-- **greenstone.games** — *once the domain is moved to Cloudflare (see below)*
-
-`/trophybingo` is a friendly alias that redirects to the root (see `_redirects`).
+- **Production:** <https://greenstone.games/trophybingo/> (also
+  www.greenstone.games and <https://trophy-bingo.gsii.workers.dev>). The root
+  `/` serves the same page, via `worker.js`.
+- **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>,
+  a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
+  branch with `bunx wrangler deploy --env staging`. No custom domains, and
+  `worker.js` keeps it out of search engines (`X-Robots-Tag: noindex`,
+  disallow-all robots.txt).
 
 ### Publish an update
 
-From this folder, on the `James Hursthouse (GSII)` Cloudflare account:
+1. Commit the change to `staging` and push. Staging redeploys in a minute.
+2. Review it on the staging URL.
+3. On approval, the `staging` → `main` pull request is merged. The merge
+   deploys to production automatically (`bunx wrangler deploy`).
 
-```bash
-npx wrangler deploy
-```
+A manual deploy, if ever needed, is `bunx wrangler deploy` from the repo root.
+Config lives in `wrangler.jsonc`; `.assetsignore` keeps repo files (docs,
+config, `worker.js`, `.git`) from being served. There is no build step.
 
-That uploads the current files and goes live in a few seconds. Config lives in
-`wrangler.jsonc`; `.assetsignore` keeps non-site files (README, config) from
-being served. There is no build step.
+### Members sign-ups
 
-### Point greenstone.games at it
-
-greenstone.games is registered at **GoDaddy** and must be **moved to Cloudflare**
-before a Worker can serve it (Workers custom domains require the zone to live on
-Cloudflare). One-time:
-
-1. **Cloudflare dashboard → Add a domain →** `greenstone.games` (Free plan). It
-   imports the existing DNS and gives you **two Cloudflare nameservers**.
-2. **At GoDaddy → greenstone.games → Nameservers →** replace
-   `ns21/ns22.domaincontrol.com` with the two Cloudflare nameservers. Propagation
-   is usually minutes to a couple of hours.
-3. Once Cloudflare shows the zone **Active**, add the custom domain to the Worker
-   by putting this in `wrangler.jsonc` and running `npx wrangler deploy`:
-
-   ```jsonc
-   "routes": [
-     { "pattern": "greenstone.games",     "custom_domain": true },
-     { "pattern": "www.greenstone.games", "custom_domain": true }
-   ]
-   ```
-
-   Cloudflare issues the certificate automatically. The root then serves this
-   page, and `greenstone.games/trophybingo` redirects to it.
-
-The `routes` block is left out of `wrangler.jsonc` until the zone is on
-Cloudflare — adding it before then makes `wrangler deploy` fail.
-
-### Optional: auto-deploy on push
-
-If you'd rather deploy on every `git push` instead of running the command,
-connect the repo in the dashboard (**Workers & Pages → the project → Settings →
-Builds → Connect to Git**), framework preset **None**, build command empty,
-output directory `/`. Direct `wrangler deploy` keeps working alongside it.
+The Members club form posts to `/api/join`. Each member is stored in Workers
+KV (`trophy-bingo-members` in production, `trophy-bingo-members-staging` on
+staging) as `member:<email>` with first name, the consent wording they agreed
+to, the time, country and UTM source.
 
 ## Assets & credit
 

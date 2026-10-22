@@ -1,7 +1,9 @@
 {
   // Cloudflare deploy config for the Trophy Bingo landing page.
   // This is a static site served straight from the repo root — there is
-  // no build step. Deploy with:  npx wrangler deploy
+  // no build step.
+  //   Production (main branch):    bunx wrangler deploy
+  //   Staging    (staging branch): bunx wrangler deploy --env staging
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "trophy-bingo",
   "compatibility_date": "2026-09-08",
@@ -13,5 +15,17 @@
   ],
   "assets": {
     "directory": "."
+  },
+  "env": {
+    // Staging: its own Worker on workers.dev only. No custom domains, so a
+    // staging deploy can never touch greenstone.games.
+    "staging": {
+      "name": "trophy-bingo-staging",
+      "workers_dev": true,
+      "routes": [],
+      "assets": {
+        "directory": "."
+      }
+    }
   }
 }

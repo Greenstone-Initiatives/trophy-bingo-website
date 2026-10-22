@@ -76,13 +76,14 @@ to this repo through Workers Builds:
 - **Production:** <https://greenstone.games/trophybingo/> (also
   www.greenstone.games and <https://trophy-bingo.gsii.workers.dev>). The root
   `/` redirects to `/trophybingo/`.
-- **Staging:** the `staging` branch builds as a Cloudflare Preview. Its stable
-  Preview URL is in the Worker's **Previews** section and on the pull request.
+- **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>,
+  a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
+  branch with `bunx wrangler deploy --env staging`. No custom domains.
 
 ### Publish an update
 
-1. Commit the change to `staging` and push. The Preview rebuilds in a minute.
-2. Review it on the Preview URL.
+1. Commit the change to `staging` and push. Staging redeploys in a minute.
+2. Review it on the staging URL.
 3. Approve by merging the `staging` → `main` pull request. The merge deploys
    to production automatically (`bunx wrangler deploy`).
 

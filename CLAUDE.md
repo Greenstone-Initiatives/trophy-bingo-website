@@ -19,14 +19,15 @@ See `README.md`.
 
 - **`main` is production.** Every push to `main` deploys automatically through
   Cloudflare Workers Builds (deploy command `bunx wrangler deploy`).
-- **Changes go to the `staging` branch first.** Workers Builds builds it as a
-  Preview; the stable Preview URL is listed under the Worker's Previews section
-  in Cloudflare and posted on the pull request.
+- **Changes go to the `staging` branch first.** Every push to `staging` deploys
+  the `trophy-bingo-staging` Worker (`bunx wrangler deploy --env staging`) at
+  <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>. It has no custom
+  domains, so it can never touch greenstone.games.
 - Open (or update) a pull request `staging` → `main`. **James approves by
   merging it**; the merge deploys to greenstone.games. Never push design or copy
   changes straight to `main`.
 - Check the page locally first, push to `staging`, confirm the Preview build
-  succeeded and shows the change, then hand James the Preview URL and the PR.
+  succeeded and shows the change, then hand James the staging URL and the PR.
 - If a manual deploy is ever needed: `bunx wrangler deploy` from the repo root.
   Never `npx`.
 - Joe also edits this repo directly on GitHub. Pull before you change anything.

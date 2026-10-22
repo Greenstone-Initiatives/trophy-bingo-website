@@ -148,8 +148,8 @@ a { color: var(--pink-deep); }
 .hero__scrim {
   z-index: -1;
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(255,61,127,.30), transparent 60%),
-    linear-gradient(180deg, rgba(58,43,77,.37), rgba(58,43,77,.57));
+    radial-gradient(120% 90% at 50% 0%, rgba(255,61,127,.18), transparent 60%),
+    linear-gradient(180deg, rgba(58,43,77,.22), rgba(58,43,77,.42));
 }
 .hero__inner { text-align: center; color: #fff; }
 .hero__tag {
@@ -173,14 +173,14 @@ a { color: var(--pink-deep); }
   line-height: 1.08;
   margin: 0 auto 10px;
   max-width: 16ch;
-  text-shadow: 0 3px 0 rgba(0,0,0,.18);
+  text-shadow: 0 3px 0 rgba(0,0,0,.22), 0 2px 18px rgba(0,0,0,.45);
 }
 .hero p.sub {
   font-size: clamp(.98rem, min(2.2vw, 2.4vh), 1.35rem);
   font-weight: 600;
   margin: 0 auto 24px;
   max-width: 42ch;
-  text-shadow: 0 2px 6px rgba(0,0,0,.4);
+  text-shadow: 0 2px 6px rgba(0,0,0,.6), 0 0 18px rgba(0,0,0,.4);
 }
 .hero__inner .btn--big { margin-top: 8px; }
 

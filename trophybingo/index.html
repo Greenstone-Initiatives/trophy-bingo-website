@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Trophy Bingo — Play the free dog-rescue bingo adventure</title>
-  <meta name="description" content="Team up with Goldie the golden retriever and friends for some bonus bingo fun! Play Trophy Bingo free — rescue lost dogs, spin the wheel, and clear over 120 levels of action bingo.">
+  <meta name="description" content="Join Goldie on the bingo adventure of a lifetime. Ernest Getmyway has netted her friends. Play Trophy Bingo free on iWin, rescue the pack and join the members club.">
 
   <link rel="icon" type="image/png" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/favicon.png">
@@ -13,7 +13,7 @@
   <!-- Open Graph / social -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Trophy Bingo — Play the free dog-rescue bingo adventure">
-  <meta property="og:description" content="Team up with Goldie the golden retriever and friends for some bonus bingo fun! Play free.">
+  <meta property="og:description" content="Ernest Getmyway has netted Goldie's friends. Play free on iWin and bring the pack home.">
   <meta property="og:url" content="https://greenstone.games/trophybingo/">
   <meta property="og:image" content="https://greenstone.games/assets/tile.png">
   <meta name="twitter:card" content="summary_large_image">
@@ -42,6 +42,7 @@
       fbq('track', 'PageView');
     })();
   </script>
+  <script src="/trophybingo/dogs.js" defer></script>
 </head>
 <body>
 
@@ -51,16 +52,17 @@
       <a class="brand" href="#top" aria-label="Trophy Bingo home">
         <img src="/assets/logo.png" alt="Trophy Bingo" width="438" height="198">
       </a>
-      <nav class="nav">
-        <a class="navlink hide-mobile" href="#features">Features</a>
-        <a class="navlink hide-mobile" href="#screens">Screens</a>
+      <nav class="nav" aria-label="Main">
+        <a class="navlink hide-mobile" href="#story">The story</a>
+        <a class="navlink hide-mobile" href="#pack">The pack</a>
+        <a class="navlink hide-mobile" href="#club">Members club</a>
         <a class="btn btn--sky js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Free ↗</a>
       </nav>
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
   <main id="top">
+    <!-- ===== Hero ===== -->
     <section class="hero">
       <video class="hero__video" autoplay muted loop playsinline poster="/assets/hero.png">
         <source src="/assets/hero.mp4" type="video/mp4">
@@ -68,49 +70,68 @@
       <div class="hero__scrim"></div>
 
       <div class="wrap hero__inner">
-        <span class="hero__tag">⭐ 4.28 / 5 &nbsp;•&nbsp; Free to play</span>
+        <span class="hero__tag">Free to play &nbsp;•&nbsp; No download</span>
         <h1>Join Goldie on the bingo adventure of a lifetime!</h1>
         <p class="sub">Team up with Goldie the golden retriever &amp; friends for some bonus bingo fun. Rescue lost dogs, spin the wheel, and win big.</p>
-
         <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
       </div>
     </section>
 
-    <!-- ===== Features ===== -->
-    <section class="section" id="features">
-      <div class="wrap">
-        <h2>Not your grandma's bingo</h2>
-        <p class="lead">Action bingo with an all-new look that delights even the most seasoned player — huge rewards for strategic play, tons of instant bonuses, and over 120 levels of pure fun.</p>
-        <div class="features">
-          <div class="feature">
-            <div class="emoji">🐶</div>
-            <h3>Rescue lost dogs</h3>
-            <p>Find lost dogs to unlock brand-new Power Plays.</p>
+    <!-- ===== The story ===== -->
+    <section class="section story" id="story">
+      <div class="wrap story__grid">
+        <div class="story__copy">
+          <span class="kicker">The story</span>
+          <h2>Ernest Getmyway wants every dog.</h2>
+          <p class="lead">He's the Trophy Hunter, and his newest obsession has four paws and a wagging tail. Ernest has netted Goldie's friends and locked them away from the Dog Park to the mountaintops. Win bingos, collect the keys and toys he's hidden, and spring the pack one dog at a time.</p>
+          <div class="cast">
+            <div class="cast__card">
+              <img src="/assets/story/ernest.png" alt="Ernest Getmyway" loading="lazy">
+              <div><strong>Ernest Getmyway</strong><span>The Trophy Hunter. Never met a dog he didn't want behind bars.</span></div>
+            </div>
+            <div class="cast__card">
+              <img src="/assets/story/chester.png" alt="Chester the cat" loading="lazy">
+              <div><strong>Chester</strong><span>Ernest's cat. Loyal to the boss. For now.</span></div>
+            </div>
           </div>
-          <div class="feature">
-            <div class="emoji">🎡</div>
-            <h3>Spin the wheel</h3>
-            <p>Win rewards and collect items on the Spin Wheel.</p>
-          </div>
-          <div class="feature">
-            <div class="emoji">💎</div>
-            <h3>Bonus bingos</h3>
-            <p>Clear obstacles, chain combos, and rack up bonus bingos.</p>
-          </div>
-          <div class="feature">
-            <div class="emoji">🏆</div>
-            <h3>120+ levels</h3>
-            <p>A whole adventure of strategic, fast-paced bingo to master.</p>
-          </div>
+          <a class="btn js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Start the rescue</a>
+        </div>
+        <div class="story__art">
+          <img src="/assets/story/ernest-park.jpg" alt="Ernest Getmyway striding through the park with his net" loading="lazy" width="1280" height="720">
         </div>
       </div>
     </section>
 
-    <!-- ===== Screenshots ===== -->
+    <!-- ===== The pack ===== -->
+    <section class="section pack" id="pack">
+      <div class="wrap">
+        <h2>Meet the pack.</h2>
+        <p class="lead">Goldie leads the way. Every dog you rescue joins your team for good, and the best of them bring a Power Play into every game. Tap a pup to get to know them.</p>
+        <div class="worlds" role="tablist" aria-label="Filter the pack by world"></div>
+        <div class="dogs" aria-live="polite"></div>
+        <noscript><p class="lead">Turn on JavaScript to meet the pack.</p></noscript>
+      </div>
+    </section>
+
+    <dialog class="dog-dialog" aria-labelledby="dog-name">
+      <form method="dialog"><button class="dog-dialog__close" aria-label="Close">×</button></form>
+      <div class="dog-dialog__head">
+        <img class="dog-dialog__face" src="" alt="">
+        <div>
+          <h3 id="dog-name"></h3>
+          <p class="dog-dialog__breed"></p>
+        </div>
+      </div>
+      <p class="dog-dialog__bio"></p>
+      <div class="dog-dialog__power"><span class="chip"></span><p></p></div>
+      <p class="dog-dialog__fact"></p>
+    </dialog>
+
+    <!-- ===== The game ===== -->
     <section class="section shots-section" id="screens">
       <div class="wrap">
-        <h2>Take a peek</h2>
-        <p class="lead">Bright, bubbly and packed with dogs to rescue.</p>
+        <h2>Not your grandma's bingo</h2>
+        <p class="lead">Action bingo with an all-new look that delights even the most seasoned player — huge rewards for strategic play, tons of instant bonuses, and over 120 levels of pure fun.</p>
         <div class="shots">
           <img src="/assets/hero.png" alt="The Trophy Bingo dog park board with Goldie and friends" loading="lazy">
           <img src="/assets/screenshots/1.png" alt="The Spin Wheel — spin to collect rewards" loading="lazy">
@@ -120,11 +141,51 @@
       </div>
     </section>
 
+    <!-- ===== Members club ===== -->
+    <section class="section club" id="club">
+      <div class="wrap club__grid">
+        <div class="member-card" aria-hidden="true">
+          <div class="member-card__top">
+            <img src="/assets/logo.png" alt="">
+            <span>Pack member</span>
+          </div>
+          <img class="member-card__goldie" src="/assets/story/goldie.png" alt="">
+          <div class="member-card__paws">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 13c-3 0-5.5 2.4-5.5 4.6 0 1.6 1.3 2.4 2.8 2.4 1 0 1.7-.4 2.7-.4s1.7.4 2.7.4c1.5 0 2.8-.8 2.8-2.4C17.5 15.4 15 13 12 13zM6.2 11.6c1.2-.3 1.8-1.8 1.4-3.3S6 5.9 4.8 6.2 3 8 3.4 9.5s1.6 2.4 2.8 2.1zm11.6 0c1.2.3 2.4-.6 2.8-2.1s-.2-3-1.4-3.3-2.4.6-2.8 2.1.2 3 1.4 3.3zM9.4 8.4c1.4 0 2.3-1.4 2.3-3s-.9-3-2.3-3-2.3 1.4-2.3 3 .9 3 2.3 3zm5.2 0c1.4 0 2.3-1.4 2.3-3s-.9-3-2.3-3-2.3 1.4-2.3 3 .9 3 2.3 3z"/></svg>
+          </div>
+        </div>
+        <div class="club__copy">
+          <span class="kicker">Members club</span>
+          <h2>Join the Pack.</h2>
+          <p class="lead">Pack members get the news first and earn Trophy Bingo merch made only for the club. Sign up free and Goldie will be in touch.</p>
+          <form class="join" novalidate>
+            <div class="join__row">
+              <label class="join__field">
+                <span>First name</span>
+                <input type="text" name="firstName" autocomplete="given-name" maxlength="60">
+              </label>
+              <label class="join__field">
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" required maxlength="200">
+              </label>
+            </div>
+            <label class="join__hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            <label class="join__consent">
+              <input type="checkbox" name="consent" required>
+              <span>Yes, send me Trophy Bingo news, member rewards and offers from Greenstone Games by email. I can unsubscribe at any time.</span>
+            </label>
+            <button class="btn btn--big" type="submit">Join the Pack</button>
+            <p class="join__msg" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- ===== CTA ===== -->
     <section class="section cta">
       <div class="wrap">
         <h2>Ready to play?</h2>
-        <p class="lead">Jump in free — no download needed. Goldie's waiting on iWin!</p>
+        <p class="lead">Goldie's waiting on iWin, and it's free to play.</p>
         <a class="btn btn--big btn--sky js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Trophy Bingo Free</a>
       </div>
     </section>
@@ -134,10 +195,12 @@
   <footer class="site-footer">
     <div class="wrap">
       <img src="/assets/logo.png" alt="Trophy Bingo">
-      <div>
+      <div class="site-footer__links">
+        <a href="#story">The story</a>
+        <a href="#pack">The pack</a>
+        <a href="#club">Members club</a>
         <a class="js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play now</a>
         <a href="https://iwin.com/games/trophy-bingo" target="_blank" rel="noopener">Game on iWin</a>
-        <a href="https://www.facebook.com/TrophyBingo" target="_blank" rel="noopener">Facebook</a>
       </div>
       <p class="fine">© <span id="yr"></span> Greenstone Games. Trophy Bingo and Goldie are trademarks of their respective owners. Powered by iWin.</p>
     </div>
@@ -165,6 +228,117 @@
         if (window.fbq) { fbq('track', 'Lead'); fbq('trackCustom', 'PlayClicked'); }
       });
     });
+
+    // ----- The pack: world tabs, dog cards and the bio dialog -----
+    window.addEventListener('DOMContentLoaded', function () {
+      var dogs = window.TB_DOGS || [];
+      var worlds = ['All'];
+      dogs.forEach(function (d) { if (worlds.indexOf(d.world) === -1) worlds.push(d.world); });
+      var tabs = document.querySelector('.worlds');
+      var grid = document.querySelector('.dogs');
+      var dlg = document.querySelector('.dog-dialog');
+
+      function el(tag, cls, text) {
+        var e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text) e.textContent = text;
+        return e;
+      }
+
+      function open(d) {
+        dlg.querySelector('.dog-dialog__face').src = '/assets/dogs/' + d.img + '.png';
+        dlg.querySelector('.dog-dialog__face').alt = d.name;
+        dlg.querySelector('#dog-name').textContent = d.name;
+        dlg.querySelector('.dog-dialog__breed').textContent = d.breed + ' · ' + d.world;
+        dlg.querySelector('.dog-dialog__bio').textContent = d.bio;
+        dlg.querySelector('.dog-dialog__power .chip').textContent = d.kind;
+        dlg.querySelector('.dog-dialog__power p').textContent = d.power;
+        dlg.querySelector('.dog-dialog__fact').textContent = d.fact;
+        if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      }
+
+      function render(world) {
+        grid.textContent = '';
+        dogs.filter(function (d) { return world === 'All' || d.world === world; }).forEach(function (d) {
+          var b = el('button', 'dog');
+          b.type = 'button';
+          var img = el('img', 'dog__face');
+          img.src = '/assets/dogs/' + d.img + '.png';
+          img.alt = '';
+          img.loading = 'lazy';
+          b.appendChild(img);
+          b.appendChild(el('strong', 'dog__name', d.name));
+          b.appendChild(el('span', 'dog__breed', d.breed));
+          b.appendChild(el('span', 'chip' + (d.kind === 'Power Play' ? '' : ' chip--skill'), d.kind));
+          b.setAttribute('aria-label', d.name + ', ' + d.breed + '. ' + d.kind + ': ' + d.power);
+          b.addEventListener('click', function () { open(d); });
+          grid.appendChild(b);
+        });
+      }
+
+      worlds.forEach(function (w, i) {
+        var t = el('button', 'world', w);
+        t.type = 'button';
+        t.setAttribute('role', 'tab');
+        t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+        t.addEventListener('click', function () {
+          tabs.querySelectorAll('.world').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+          t.setAttribute('aria-selected', 'true');
+          render(w);
+        });
+        tabs.appendChild(t);
+      });
+      render('All');
+
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    });
+
+    // ----- Members club sign-up -----
+    (function () {
+      var form = document.querySelector('.join');
+      var msg = form.querySelector('.join__msg');
+      var params = new URLSearchParams(window.location.search);
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = form.email.value.trim();
+        msg.className = 'join__msg';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'That email doesn’t look right. Try again?'; msg.classList.add('is-error'); return; }
+        if (!form.consent.checked) { msg.textContent = 'Tick the box so Goldie can write to you.'; msg.classList.add('is-error'); return; }
+        var btn = form.querySelector('button[type=submit]');
+        btn.disabled = true;
+        msg.textContent = 'Fetching your membership…';
+        fetch('/api/join', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            firstName: form.firstName.value.trim(),
+            consent: form.consent.checked,
+            website: form.website.value,
+            source: {
+              page: location.pathname,
+              referrer: document.referrer,
+              utm_source: params.get('utm_source') || '',
+              utm_medium: params.get('utm_medium') || '',
+              utm_campaign: params.get('utm_campaign') || ''
+            }
+          })
+        }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+          .then(function (res) {
+            btn.disabled = false;
+            if (res.ok) {
+              form.reset();
+              msg.textContent = res.already ? 'You’re already in the pack. Good dog.' : 'You’re in the pack. Watch your inbox.';
+              msg.classList.add('is-ok');
+              if (window.fbq) fbq('track', 'CompleteRegistration');
+            } else {
+              msg.textContent = res.error === 'slow-down' ? 'Easy, tiger. Try again in a minute.' : 'Something went wrong. Try again?';
+              msg.classList.add('is-error');
+            }
+          })
+          .catch(function () { btn.disabled = false; msg.textContent = 'Something went wrong. Try again?'; msg.classList.add('is-error'); });
+      });
+    })();
   </script>
 </body>
 </html>

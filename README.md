@@ -18,6 +18,8 @@ GitHub and the change is live in seconds.
 ```
 trophybingo/
   index.html      The whole page (served at /trophybingo/)
+  dogs.js         The pack: names, powers, bios, breed facts
+worker.js         Members sign-up (/api/join) + staging noindex
 styles.css        All styling (candy/playful brand)
 _headers          Caching + security headers
 _redirects        Root → /trophybingo/
@@ -29,6 +31,8 @@ assets/
   hero.png        Game-board still (video poster + play-button backdrop)
   bg-candy.jpg    Original candy border texture (spare)
   screenshots/    In-game screenshots (Spin Wheel, board, etc.)
+  dogs/           A face for every dog in the pack
+  story/          Ernest, Chester, Goldie and the story still
 ```
 
 ## How the game is delivered
@@ -79,7 +83,7 @@ to this repo through Workers Builds:
 - **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>,
   a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
   branch with `bunx wrangler deploy --env staging`. No custom domains, and
-  `staging-noindex.js` keeps it out of search engines (`X-Robots-Tag: noindex`,
+  `worker.js` keeps it out of search engines (`X-Robots-Tag: noindex`,
   disallow-all robots.txt).
 
 ### Publish an update
@@ -91,7 +95,14 @@ to this repo through Workers Builds:
 
 A manual deploy, if ever needed, is `bunx wrangler deploy` from the repo root.
 Config lives in `wrangler.jsonc`; `.assetsignore` keeps repo files (docs,
-config, `.git`) from being served. There is no build step.
+config, `worker.js`, `.git`) from being served. There is no build step.
+
+### Members sign-ups
+
+The Members club form posts to `/api/join`. Each member is stored in Workers
+KV (`trophy-bingo-members` in production, `trophy-bingo-members-staging` on
+staging) as `member:<email>` with first name, the consent wording they agreed
+to, the time, country and UTM source.
 
 ## Assets & credit
 

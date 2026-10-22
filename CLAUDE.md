@@ -10,8 +10,8 @@ the game hosted on iWin. It **hands off** to iWin — every Play button opens
 `https://iwin.com/free-games/play/trophy-bingo` in a new tab. The game is **not**
 embedded (an in-page iframe was janky across browsers; see README).
 
-Hosted on **Cloudflare** (static assets, no Worker code of our own), configured
-by `wrangler.jsonc`. Live at **greenstone.games/trophybingo/** (the root
+Hosted on **Cloudflare**: static assets plus one small Worker (`worker.js`)
+that handles the members sign-up at `/api/join`, configured by `wrangler.jsonc`. Live at **greenstone.games/trophybingo/** (the root
 302-redirects there) and <https://trophy-bingo.gsii.workers.dev/trophybingo/>.
 See `README.md`.
 
@@ -22,9 +22,9 @@ See `README.md`.
 - **Changes go to the `staging` branch first.** Every push to `staging` deploys
   the `trophy-bingo-staging` Worker (`bunx wrangler deploy --env staging`) at
   <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>. It has no custom
-  domains, so it can never touch greenstone.games, and `staging-noindex.js`
-  (staging only) adds `X-Robots-Tag: noindex` and a disallow-all robots.txt.
-  Production stays pure static assets with no Worker script.
+  domains, so it can never touch greenstone.games. On staging `worker.js` runs
+  for every request and adds `X-Robots-Tag: noindex` plus a disallow-all
+  robots.txt. In production it runs only for `/api/*`; pages stay static.
 - Keep a pull request `staging` → `main` open. **James reviews the staging URL
   and approves in chat; Claude then merges the PR**, which deploys to
   greenstone.games. Never push design or copy changes straight to `main`.
@@ -38,8 +38,8 @@ See `README.md`.
 
 - **No build tooling.** Keep it plain HTML/CSS/vanilla-JS so Joe and James can
   edit directly on GitHub. Do not add a bundler, framework, or `package.json`.
-  (`wrangler.jsonc` is deploy config and `staging-noindex.js` is a staging-only
-  header shim; neither is a build step.)
+  (`wrangler.jsonc` is deploy config and `worker.js` is one plain module;
+  neither is a build step.)
 - **The page lives at `trophybingo/index.html`.** Assets live in `assets/` at
   the root. Don't introduce a `pages/` structure.
 - **The hand-off is the point.** Every Play link (`a.js-play`) opens the iWin
@@ -52,8 +52,19 @@ See `README.md`.
 - **Never touch the game repos** (`trophy-bingo`, `trophy-bingo-jh`). This
   landing-page repo is the only Trophy Bingo repo Claude may change.
 
+## The pack and the members club
+
+- Dog names, breeds, worlds, Power Plays / Helper Skills, bios and breed facts
+  live in `trophybingo/dogs.js` (from the game's collections design matrix).
+  Faces are `assets/dogs/<img>.png`; story art is `assets/story/`.
+- Sign-ups POST to `/api/join` and land in Workers KV as `member:<email>`
+  with the consent wording, timestamp and UTM source. Production store:
+  `trophy-bingo-members`; staging store: `trophy-bingo-members-staging`.
+- The consent wording appears in both `trophybingo/index.html` and
+  `worker.js`; change them together.
+
 ## Preview
 
 ```bash
-python -m http.server 8000   # http://localhost:8000/trophybingo/
+bunx wrangler dev --env staging   # http://localhost:8787/trophybingo/ (sign-up works locally)
 ```

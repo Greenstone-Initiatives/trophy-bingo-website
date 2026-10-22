@@ -1,11 +1,12 @@
 {
-  // Cloudflare deploy config for the Trophy Bingo landing page.
-  // This is a static site served straight from the repo root — there is
-  // no build step.
+  // Cloudflare deploy config for the Trophy Bingo site.
+  // Static assets served straight from the repo root, plus a small Worker
+  // (worker.js) for the members sign-up. No build step.
   //   Production (main branch):    bunx wrangler deploy
   //   Staging    (staging branch): bunx wrangler deploy --env staging
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "trophy-bingo",
+  "main": "worker.js",
   "compatibility_date": "2026-09-08",
   "workers_dev": true,
   "observability": { "enabled": true },
@@ -14,22 +15,31 @@
     { "pattern": "www.greenstone.games", "custom_domain": true }
   ],
   "assets": {
-    "directory": "."
+    "directory": ".",
+    "binding": "ASSETS",
+    // Pages and files go straight to static assets; only the API hits the Worker.
+    "run_worker_first": ["/api/*"]
   },
+  "kv_namespaces": [
+    { "binding": "MEMBERS", "id": "029e857837064be4825858090d363272" }
+  ],
   "env": {
     // Staging: its own Worker on workers.dev only. No custom domains, so a
-    // staging deploy can never touch greenstone.games. A tiny script adds
-    // noindex to every response so search engines stay out.
+    // staging deploy can never touch greenstone.games. Every response gets
+    // noindex, and sign-ups land in a separate staging store.
     "staging": {
       "name": "trophy-bingo-staging",
-      "main": "staging-noindex.js",
       "workers_dev": true,
       "routes": [],
+      "vars": { "STAGING": "1" },
       "assets": {
         "directory": ".",
         "binding": "ASSETS",
         "run_worker_first": true
-      }
+      },
+      "kv_namespaces": [
+        { "binding": "MEMBERS", "id": "1787aa19beb14e2f8e9442795a2e5703" }
+      ]
     }
   }
 }

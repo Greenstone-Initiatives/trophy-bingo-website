@@ -10,11 +10,20 @@ the game hosted on iWin. It **hands off** to iWin — every Play button opens
 `https://iwin.com/free-games/play/trophy-bingo` in a new tab. The game is **not**
 embedded (an in-page iframe was janky across browsers; see README).
 
-Hosted on **Cloudflare** (static assets, no Worker code of our own). Deploys
-are a direct upload from this folder — `npx wrangler deploy` — configured by
-`wrangler.jsonc`. Live at <https://trophy-bingo.gsii.workers.dev>; intended home
-is **greenstone.games** (root) with **/trophybingo** as an alias, pending the
-domain move to Cloudflare. See `README.md`.
+Hosted on **Cloudflare** (static assets, no Worker code of our own), configured
+by `wrangler.jsonc`. Live at **greenstone.games** (and www.greenstone.games) and
+<https://trophy-bingo.gsii.workers.dev>. See `README.md`.
+
+## Deploying
+
+- **Every push to `main` deploys automatically** through Cloudflare Workers
+  Builds (deploy command `bunx wrangler deploy`). There is nothing to run by hand.
+- Page, design and copy changes James asks for go straight to `main`. Check the
+  page locally first, push, then confirm the build succeeded and the live site
+  shows the change.
+- If a manual deploy is ever needed: `bunx wrangler deploy` from the repo root.
+  Never `npx`.
+- Joe also edits this repo directly on GitHub. Pull before you change anything.
 
 ## Rules of the road
 
@@ -30,6 +39,8 @@ domain move to Cloudflare. See `README.md`.
   works served at the root or under `/trophybingo`.
 - **Don't hot-link iWin's CDN** for the video/screenshots — they're copied into
   `assets/` on purpose so the page doesn't break if iWin moves things.
+- **Never touch the game repos** (`trophy-bingo`, `trophy-bingo-jh`). This
+  landing-page repo is the only Trophy Bingo repo Claude may change.
 
 ## Preview
 

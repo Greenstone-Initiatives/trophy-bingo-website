@@ -149,7 +149,7 @@ a { color: var(--pink-deep); }
   z-index: -1;
   background:
     radial-gradient(120% 90% at 50% 0%, rgba(255,61,127,.30), transparent 60%),
-    linear-gradient(180deg, rgba(58,43,77,.42), rgba(58,43,77,.62));
+    linear-gradient(180deg, rgba(58,43,77,.37), rgba(58,43,77,.57));
 }
 .hero__inner { text-align: center; color: #fff; }
 .hero__tag {
@@ -625,6 +625,8 @@ a { color: var(--pink-deep); }
 /* Desktop: the nav's Play Free button does the job; keep the hero clear. */
 @media (min-width: 920px) {
   .hero__inner .btn--big { display: none; }
+  /* Lift the copy clear of the captions in the video */
+  .hero__inner { transform: translateY(-20px); }
 }
 
 /* ---------- Mobile menu ---------- */

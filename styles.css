@@ -671,3 +671,29 @@ a { color: var(--pink-deep); }
 .hero h1, .section h2 { text-wrap: balance; }
 
 .shots::-webkit-scrollbar { display: none; }
+
+/* ---------- Screenshot drift (set up by the page script) ---------- */
+.gallery.is-drifting {
+  overflow: hidden;
+  margin-inline: -20px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.gallery.is-drifting .gallery__nav { display: none; }
+.gallery.is-drifting .shots {
+  width: max-content;
+  gap: 0;
+  overflow: visible;
+  scroll-snap-type: none;
+  padding: 6px 0 22px;
+  animation: tbDrift var(--drift, 50s) linear infinite;
+  will-change: transform;
+}
+.gallery.is-drifting .shots img {
+  flex: 0 0 auto;
+  width: clamp(260px, 44vw, 600px);
+  margin-right: 18px;
+}
+.gallery.is-drifting:hover .shots,
+.gallery.is-drifting.is-offscreen .shots { animation-play-state: paused; }
+@keyframes tbDrift { to { transform: translateX(-50%); } }

@@ -469,51 +469,44 @@
       bar.querySelector('.packbar__close').addEventListener('click', window.TB_closeBar);
     })();
 
-    // ----- Screenshot scroller: arrows + auto-advance -----
+    // ----- Screenshots: a slow, endless drift that pauses under the mouse -----
     (function () {
+      var gallery = document.querySelector('.gallery');
       var track = document.querySelector('.shots');
-      if (!track) return;
+      if (!gallery || !track) return;
       var prev = document.querySelector('.gallery__nav--prev');
       var next = document.querySelector('.gallery__nav--next');
-      function slideW() {
-        var slide = track.querySelector('img');
-        return slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth;
-      }
-      function atEnd() { return track.scrollLeft >= track.scrollWidth - track.clientWidth - 4; }
-      function step(dir) {
-        if (dir > 0 && atEnd()) track.scrollTo({ left: 0, behavior: 'smooth' });
-        else track.scrollBy({ left: dir * slideW(), behavior: 'smooth' });
-      }
-      prev.addEventListener('click', function () { step(-1); hold(); });
-      next.addEventListener('click', function () { step(1); hold(); });
-      function arrows() {
-        prev.disabled = track.scrollLeft <= 2;
-        next.disabled = false;
-      }
-      track.addEventListener('scroll', arrows, { passive: true });
-      window.addEventListener('resize', arrows);
-      arrows();
 
-      // Auto-advance every few seconds, looping back to the start. Pauses while
-      // the pointer is over it, while someone is touching or tabbing through
-      // it, when it's off screen, and for anyone who prefers reduced motion.
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var DELAY = 3500, timer = 0, paused = false, visible = false, heldUntil = 0;
-      function tick() {
-        if (!paused && visible && Date.now() >= heldUntil && !document.hidden) step(1);
+      // Reduced motion: keep the hand-scrolled strip with arrows instead.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        function step(dir) {
+          var slide = track.querySelector('img');
+          track.scrollBy({ left: dir * (slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth), behavior: 'smooth' });
+        }
+        prev.addEventListener('click', function () { step(-1); });
+        next.addEventListener('click', function () { step(1); });
+        return;
       }
-      function hold() { heldUntil = Date.now() + 8000; }
-      var gallery = track.closest('.gallery') || track;
-      gallery.addEventListener('mouseenter', function () { paused = true; });
-      gallery.addEventListener('mouseleave', function () { paused = false; });
-      gallery.addEventListener('focusin', function () { paused = true; });
-      gallery.addEventListener('focusout', function () { paused = false; });
-      track.addEventListener('touchstart', hold, { passive: true });
-      track.addEventListener('wheel', hold, { passive: true });
+
+      // Duplicate the set once so the strip can loop with no seam.
+      var imgs = [].slice.call(track.querySelectorAll('img'));
+      imgs.forEach(function (img) {
+        img.loading = 'eager';
+        var copy = img.cloneNode(true);
+        copy.alt = '';
+        copy.setAttribute('aria-hidden', 'true');
+        track.appendChild(copy);
+      });
+      gallery.style.setProperty('--drift', (imgs.length * 9) + 's');
+      track.removeAttribute('tabindex');
+      gallery.classList.add('is-drifting');
+
+      // Save the battery when the strip is off screen.
       if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.35 }).observe(track);
-      } else { visible = true; }
-      timer = setInterval(tick, DELAY);
+        new IntersectionObserver(function (en) {
+          gallery.classList.toggle('is-offscreen', !en[0].isIntersecting);
+        }).observe(gallery);
+      }
     })();
   </script>
 </body>

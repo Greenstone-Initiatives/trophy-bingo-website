@@ -619,3 +619,8 @@ a { color: var(--pink-deep); }
   .packbar__consent { font-size: .74rem; }
 }
 @media (prefers-reduced-motion: reduce) { .packbar { transition: none; } .packbar__caret { animation: none; } }
+
+/* Desktop: the nav's Play Free button does the job; keep the hero clear. */
+@media (min-width: 760px) {
+  .hero__inner .btn--big { display: none; }
+}

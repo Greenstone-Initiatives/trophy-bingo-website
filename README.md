@@ -27,7 +27,7 @@ assets/
   logo.png        Trophy Bingo wordmark
   favicon.png     App-icon (Goldie + B7 ball) — favicon & social image
   tile.png        Same app-icon (used for og:image)
-  hero.mp4        Looping gameplay video behind the hero
+  hero-v2.mp4     Looping gameplay video behind the hero (end cap trimmed)
   hero.png        Game-board still (video poster + play-button backdrop)
   bg-candy.jpg    Original candy border texture (spare)
   screenshots/    In-game screenshots (Spin Wheel, board, etc.)

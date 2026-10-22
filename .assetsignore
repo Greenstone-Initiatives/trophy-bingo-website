@@ -1,3 +1,6 @@
+# Files in the repo that should NOT be served as part of the website.
+# Workers Builds clones the repo, so .git and .wrangler must be listed:
+# they are NOT skipped automatically.
 .git
 .git/*
 .wrangler
@@ -11,6 +14,7 @@ bun.lockb
 package-lock.json
 .assetsignore
 .gitignore
+.gitattributes
 CLAUDE.md
 README.md
 wrangler.jsonc

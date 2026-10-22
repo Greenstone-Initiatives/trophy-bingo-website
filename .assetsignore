@@ -21,3 +21,7 @@ wrangler.jsonc
 wrangler.toml
 *.md
 worker.js
+_Archive
+_Archive/*
+assets/_Archive
+assets/_Archive/*

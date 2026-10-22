@@ -295,7 +295,9 @@ a { color: var(--pink-deep); }
   .hero__frame { width: 100%; aspect-ratio: auto; display: block; padding-bottom: 36px; box-shadow: none; }
   .hero__video { position: relative; inset: auto; height: auto; aspect-ratio: 16 / 9; display: block; z-index: 0; }
   .hero__scrim { display: none; }
-  .hero__inner { padding-top: 26px; }
+  .hero__inner { padding-top: 20px; }
+  .hero p.sub { margin-bottom: 14px; }
+  .hero__inner .btn--big { margin-top: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -619,3 +621,49 @@ a { color: var(--pink-deep); }
   .packbar__consent { font-size: .74rem; }
 }
 @media (prefers-reduced-motion: reduce) { .packbar { transition: none; } .packbar__caret { animation: none; } }
+
+/* Desktop: the nav's Play Free button does the job; keep the hero clear. */
+@media (min-width: 920px) {
+  .hero__inner .btn--big { display: none; }
+}
+
+/* ---------- Mobile menu ---------- */
+.menu-btn {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 52px; height: 52px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+}
+.menu-btn span { display: block; height: 4px; border-radius: 4px; background: var(--ink); transition: transform .2s ease, opacity .2s ease; }
+.menu-open .menu-btn span:nth-child(1) { transform: translateY(10px) rotate(45deg); }
+.menu-open .menu-btn span:nth-child(2) { opacity: 0; }
+.menu-open .menu-btn span:nth-child(3) { transform: translateY(-10px) rotate(-45deg); }
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px 22px;
+  border-top: 3px solid var(--cream-deep);
+}
+.menu[hidden] { display: none; }
+.menu a:not(.btn) {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 10px 0;
+}
+.menu .btn { margin-top: 8px; }
+@media (min-width: 920px) { .menu-btn, .menu { display: none !important; } }
+
+/* Keep short last lines from dangling */
+.hero p.sub, .lead { text-wrap: pretty; }
+.hero h1, .section h2 { text-wrap: balance; }

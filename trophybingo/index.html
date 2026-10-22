@@ -56,8 +56,17 @@
         <a class="navlink hide-mobile" href="#story">The story</a>
         <a class="navlink hide-mobile" href="#pack">The pack</a>
         <a class="navlink hide-mobile" href="#club">Members club</a>
-        <a class="btn btn--sky js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Free ↗</a>
+        <a class="btn btn--sky js-play hide-mobile" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Free ↗</a>
+        <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
+    </div>
+    <div class="menu" id="menu" hidden>
+      <a href="#story">The story</a>
+      <a href="#pack">The pack</a>
+      <a href="#club">Members club</a>
+      <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
     </div>
   </header>
 
@@ -66,14 +75,14 @@
     <section class="hero">
       <div class="hero__frame">
         <video class="hero__video" autoplay muted loop playsinline poster="/assets/hero.png">
-          <source src="/assets/hero.mp4" type="video/mp4">
+          <source src="/assets/hero-v2.mp4" type="video/mp4">
         </video>
         <div class="hero__scrim"></div>
 
         <div class="wrap hero__inner">
           <span class="hero__tag">⭐ 4.28 / 5 &nbsp;•&nbsp; Free to play</span>
           <h1>Join Goldie on the bingo adventure of a lifetime!</h1>
-          <p class="sub">Team up with Goldie the golden retriever &amp; friends for some bonus bingo fun. Rescue lost dogs, spin the wheel, and win big.</p>
+          <p class="sub">Team up with Goldie the golden retriever &amp; friends for some bonus bingo fun. Rescue lost dogs, spin the wheel, win big.</p>
           <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
         </div>
       </div>
@@ -269,6 +278,22 @@
         if (window.fbq) { fbq('track', 'Lead'); fbq('trackCustom', 'PlayClicked'); }
       });
     });
+
+    // ----- Mobile menu -----
+    (function () {
+      var btn = document.querySelector('.menu-btn');
+      var menu = document.getElementById('menu');
+      if (!btn || !menu) return;
+      function set(open) {
+        menu.hidden = !open;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.querySelector('.site-header').classList.toggle('menu-open', open);
+      }
+      btn.addEventListener('click', function () { set(menu.hidden); });
+      menu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { set(false); }); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') set(false); });
+      window.addEventListener('resize', function () { if (window.innerWidth >= 920) set(false); });
+    })();
 
     // ----- The pack: world tabs, dog cards and the bio dialog -----
     window.addEventListener('DOMContentLoaded', function () {

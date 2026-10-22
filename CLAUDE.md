@@ -57,7 +57,7 @@ See `README.md`.
 
 - Dog names, breeds, worlds, Power Plays / Helper Skills, bios and breed facts
   live in `trophybingo/dogs.js` (from the game's collections design matrix).
-  Faces are `assets/dogs/<img>.png`; story art is `assets/story/`.
+  Faces are `assets/pack/<img>.png` (head sprites with the game's eye sprites fitted); story art is `assets/story/`.
 - Sign-ups POST to `/api/join` and land in Workers KV as `member:<email>`
   with the consent wording, timestamp and UTM source. Production store:
   `trophy-bingo-members`; staging store: `trophy-bingo-members-staging`.

@@ -1,5 +1,5 @@
 // Trophy Bingo: the pack. Names, powers and bios come from the game's design docs.
-// Edit freely; each dog's face lives at /assets/dogs/<img>.png.
+// Edit freely; each dog's face lives at /assets/pack/<img>.png.
 window.TB_DOGS = [
   {
     "name": "Goldie",

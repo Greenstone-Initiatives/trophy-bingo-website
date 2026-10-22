@@ -31,7 +31,7 @@ assets/
   hero.png        Game-board still (video poster + play-button backdrop)
   bg-candy.jpg    Original candy border texture (spare)
   screenshots/    In-game screenshots (Spin Wheel, board, etc.)
-  dogs/           A face for every dog in the pack
+  pack/           A face for every dog in the pack
   story/          Ernest, Chester, Goldie and the story still
 ```
 

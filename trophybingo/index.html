@@ -216,7 +216,7 @@
   <!-- ===== Join the Pack bar (slides up on scroll) ===== -->
   <aside class="packbar" id="packbar" aria-label="Join the Pack" hidden>
     <div class="packbar__in">
-      <img class="packbar__goldie" src="/assets/dogs/goldie.png" alt="">
+      <img class="packbar__goldie" src="/assets/pack/goldie.png" alt="">
       <form class="join packbar__form" novalidate>
         <div class="packbar__row">
           <strong class="packbar__title">Join the Pack</strong>
@@ -312,7 +312,7 @@
       }
 
       function open(d) {
-        dlg.querySelector('.dog-dialog__face').src = '/assets/dogs/' + d.img + '.png';
+        dlg.querySelector('.dog-dialog__face').src = '/assets/pack/' + d.img + '.png';
         dlg.querySelector('.dog-dialog__face').alt = d.name;
         dlg.querySelector('#dog-name').textContent = d.name;
         dlg.querySelector('.dog-dialog__breed').textContent = d.breed + ' · ' + d.world;
@@ -329,7 +329,7 @@
           var b = el('button', 'dog');
           b.type = 'button';
           var img = el('img', 'dog__face');
-          img.src = '/assets/dogs/' + d.img + '.png';
+          img.src = '/assets/pack/' + d.img + '.png';
           img.alt = '';
           img.loading = 'lazy';
           b.appendChild(img);

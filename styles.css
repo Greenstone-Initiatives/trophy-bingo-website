@@ -88,6 +88,7 @@ a { color: var(--pink-deep); }
   border-bottom: 3px solid var(--cream-deep);
 }
 .site-header .wrap {
+  max-width: 1040px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -108,15 +109,33 @@ a { color: var(--pink-deep); }
 
 /* ---------- Hero ---------- */
 /* The gameplay video fills the first screen; copy and the Play button sit on it. */
+/* The video sits in a 16:9 frame that always fits the first screen, so it is
+   never cropped. Wider screens get soft side bars from a blurred still. */
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 40px 0;
   isolation: isolate;
-  /* The box matches the video's 16:9 frame, so nothing is cropped. */
+  background: var(--ink);
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  z-index: -3;
+  background: url("/assets/hero.png") center / cover no-repeat;
+  filter: blur(28px) saturate(1.1) brightness(.7);
+}
+.hero__frame {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, calc((100vh - 107px) * 16 / 9));
+  width: min(100%, calc((100svh - 107px) * 16 / 9));
   aspect-ratio: 16 / 9;
+  margin: 0 auto;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(0,0,0,.35);
 }
 .hero__video, .hero__scrim {
   position: absolute;
@@ -150,14 +169,14 @@ a { color: var(--pink-deep); }
 .hero h1 {
   font-family: var(--font-head);
   font-weight: 600;
-  font-size: clamp(1.9rem, 4.6vw, 3.1rem);
+  font-size: clamp(1.6rem, min(4.6vw, 5.4vh), 3.1rem);
   line-height: 1.08;
   margin: 0 auto 10px;
   max-width: 16ch;
   text-shadow: 0 3px 0 rgba(0,0,0,.18);
 }
 .hero p.sub {
-  font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+  font-size: clamp(.98rem, min(2.2vw, 2.4vh), 1.35rem);
   font-weight: 600;
   margin: 0 auto 24px;
   max-width: 42ch;
@@ -272,7 +291,8 @@ a { color: var(--pink-deep); }
 
 /* Phones: video on top at full 16:9, copy below it on the ink band. */
 @media (max-width: 759px) {
-  .hero { aspect-ratio: auto; display: block; padding: 0 0 36px; background: var(--ink); }
+  .hero::before { display: none; }
+  .hero__frame { width: 100%; aspect-ratio: auto; display: block; padding-bottom: 36px; box-shadow: none; }
   .hero__video { position: relative; inset: auto; height: auto; aspect-ratio: 16 / 9; display: block; z-index: 0; }
   .hero__scrim { display: none; }
   .hero__inner { padding-top: 26px; }

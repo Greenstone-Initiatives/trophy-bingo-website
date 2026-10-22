@@ -26,7 +26,7 @@ See `README.md`.
 - Open (or update) a pull request `staging` → `main`. **James approves by
   merging it**; the merge deploys to greenstone.games. Never push design or copy
   changes straight to `main`.
-- Check the page locally first, push to `staging`, confirm the Preview build
+- Check the page locally first, push to `staging`, confirm the staging build
   succeeded and shows the change, then hand James the staging URL and the PR.
 - If a manual deploy is ever needed: `bunx wrangler deploy` from the repo root.
   Never `npx`.

@@ -132,11 +132,22 @@
       <div class="wrap">
         <h2>Not your grandma's bingo</h2>
         <p class="lead">Action bingo with an all-new look that delights even the most seasoned player — huge rewards for strategic play, tons of instant bonuses, and over 120 levels of pure fun.</p>
-        <div class="shots">
-          <img src="/assets/hero.png" alt="The Trophy Bingo dog park board with Goldie and friends" loading="lazy">
-          <img src="/assets/screenshots/1.png" alt="The Spin Wheel — spin to collect rewards" loading="lazy">
-          <img src="/assets/screenshots/2.png" alt="Trophy Bingo gameplay" loading="lazy">
-          <img src="/assets/screenshots/3.png" alt="Trophy Bingo gameplay" loading="lazy">
+        <div class="gallery">
+          <button class="gallery__nav gallery__nav--prev" type="button" aria-label="Previous screenshot">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <div class="shots" tabindex="0" aria-label="Trophy Bingo screenshots">
+            <img src="/assets/screenshots/6.jpg" alt="The Trophy Bingo title screen: Goldie, Chester and Ernest Getmyway in the park" loading="lazy" width="1280" height="720">
+            <img src="/assets/hero.png" alt="The Dog Park map, with Goldie and friends" loading="lazy" width="1280" height="720">
+            <img src="/assets/screenshots/4.png" alt="Two-card bingo on the Farm, chasing a Triple Combo" loading="lazy" width="1280" height="720">
+            <img src="/assets/screenshots/1.png" alt="The Spin Wheel, spinning for Howard the Beagle's rescue items" loading="lazy" width="1280" height="720">
+            <img src="/assets/screenshots/5.png" alt="Bingo at the Amusement Park, by the carousel" loading="lazy" width="1280" height="720">
+            <img src="/assets/screenshots/2.png" alt="Trophy Bingo gameplay in the Dog Park" loading="lazy" width="1280" height="720">
+            <img src="/assets/screenshots/3.png" alt="Trophy Bingo gameplay with power-ups on the cards" loading="lazy" width="1280" height="720">
+          </div>
+          <button class="gallery__nav gallery__nav--next" type="button" aria-label="Next screenshot">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -190,6 +201,34 @@
       </div>
     </section>
   </main>
+
+  <!-- ===== Join the Pack bar (slides up on scroll) ===== -->
+  <aside class="packbar" id="packbar" aria-label="Join the Pack" hidden>
+    <div class="packbar__in">
+      <img class="packbar__goldie" src="/assets/dogs/goldie.png" alt="">
+      <form class="join packbar__form" novalidate>
+        <div class="packbar__row">
+          <strong class="packbar__title">Join the Pack</strong>
+          <label class="packbar__field">
+            <span class="sr">Email</span>
+            <input type="email" name="email" autocomplete="email" maxlength="200">
+            <span class="packbar__ghost" aria-hidden="true"><span class="packbar__typed"></span><span class="packbar__caret"></span></span>
+          </label>
+          <button class="btn packbar__send" type="submit">Join</button>
+        </div>
+        <input type="hidden" name="firstName" value="">
+        <label class="join__hp" aria-hidden="true">Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        <label class="packbar__consent">
+          <input type="checkbox" name="consent">
+          <span>Yes, send me Trophy Bingo news, member rewards and offers from Greenstone Games by email. I can unsubscribe at any time.</span>
+        </label>
+        <p class="join__msg" role="status"></p>
+      </form>
+      <button class="packbar__close" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+  </aside>
 
   <!-- ===== Footer ===== -->
   <footer class="site-footer">
@@ -293,51 +332,135 @@
       dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
     });
 
-    // ----- Members club sign-up -----
+    // ----- Members club sign-up (the club form and the Join the Pack bar) -----
     (function () {
-      var form = document.querySelector('.join');
-      var msg = form.querySelector('.join__msg');
       var params = new URLSearchParams(window.location.search);
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var email = form.email.value.trim();
-        msg.className = 'join__msg';
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'That email doesn’t look right. Try again?'; msg.classList.add('is-error'); return; }
-        if (!form.consent.checked) { msg.textContent = 'Tick the box so Goldie can write to you.'; msg.classList.add('is-error'); return; }
-        var btn = form.querySelector('button[type=submit]');
-        btn.disabled = true;
-        msg.textContent = 'Fetching your membership…';
-        fetch('/api/join', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({
-            email: email,
-            firstName: form.firstName.value.trim(),
-            consent: form.consent.checked,
-            website: form.website.value,
-            source: {
-              page: location.pathname,
-              referrer: document.referrer,
-              utm_source: params.get('utm_source') || '',
-              utm_medium: params.get('utm_medium') || '',
-              utm_campaign: params.get('utm_campaign') || ''
-            }
-          })
-        }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
-          .then(function (res) {
-            btn.disabled = false;
-            if (res.ok) {
-              form.reset();
-              msg.textContent = res.already ? 'You’re already in the pack. Good dog.' : 'You’re in the pack. Watch your inbox.';
-              msg.classList.add('is-ok');
-              if (window.fbq) fbq('track', 'CompleteRegistration');
-            } else {
-              msg.textContent = res.error === 'slow-down' ? 'Easy, tiger. Try again in a minute.' : 'Something went wrong. Try again?';
-              msg.classList.add('is-error');
-            }
-          })
-          .catch(function () { btn.disabled = false; msg.textContent = 'Something went wrong. Try again?'; msg.classList.add('is-error'); });
+      var MEMBER_KEY = 'tb-pack-member';
+      function joined() { try { localStorage.setItem(MEMBER_KEY, '1'); } catch (e) {} }
+
+      document.querySelectorAll('form.join').forEach(function (form) {
+        var msg = form.querySelector('.join__msg');
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var email = form.email.value.trim();
+          msg.className = 'join__msg';
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'That email doesn\u2019t look right. Try again?'; msg.classList.add('is-error'); form.email.focus(); return; }
+          if (!form.consent.checked) { msg.textContent = 'Tick the box so Goldie can write to you.'; msg.classList.add('is-error'); return; }
+          var btn = form.querySelector('button[type=submit]');
+          btn.disabled = true;
+          msg.textContent = 'Fetching your membership\u2026';
+          fetch('/api/join', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              firstName: form.firstName ? form.firstName.value.trim() : '',
+              consent: form.consent.checked,
+              website: form.website.value,
+              source: {
+                page: location.pathname + (form.classList.contains('packbar__form') ? '#packbar' : '#club'),
+                referrer: document.referrer,
+                utm_source: params.get('utm_source') || '',
+                utm_medium: params.get('utm_medium') || '',
+                utm_campaign: params.get('utm_campaign') || ''
+              }
+            })
+          }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
+            .then(function (res) {
+              btn.disabled = false;
+              if (res.ok) {
+                form.reset();
+                joined();
+                msg.textContent = res.already ? 'You\u2019re already in the pack. Good dog.' : 'You\u2019re in the pack. Watch your inbox.';
+                msg.classList.add('is-ok');
+                if (window.fbq) fbq('track', 'CompleteRegistration');
+                if (form.classList.contains('packbar__form')) setTimeout(function () { window.TB_closeBar && window.TB_closeBar(); }, 2600);
+              } else {
+                msg.textContent = res.error === 'slow-down' ? 'Easy, tiger. Try again in a minute.' : 'Something went wrong. Try again?';
+                msg.classList.add('is-error');
+              }
+            })
+            .catch(function () { btn.disabled = false; msg.textContent = 'Something went wrong. Try again?'; msg.classList.add('is-error'); });
+        });
       });
+
+      // The bar slides up once you've scrolled a screen and a half, hides while
+      // the Members club section is on screen, and stays shut once closed (for
+      // the visit) or once you've joined (for good).
+      var bar = document.getElementById('packbar');
+      if (!bar) return;
+      var CLOSED_KEY = 'tb-packbar-closed';
+      var skip = false;
+      try { skip = localStorage.getItem(MEMBER_KEY) === '1' || sessionStorage.getItem(CLOSED_KEY) === '1'; } catch (e) {}
+      if (skip) return;
+      bar.hidden = false;
+
+      var club = document.getElementById('club');
+      var clubVisible = false;
+      if ('IntersectionObserver' in window && club) {
+        new IntersectionObserver(function (en) { clubVisible = en[0].isIntersecting; update(); }, { threshold: 0.15 }).observe(club);
+      }
+      var input = bar.querySelector('input[type=email]');
+      function update() {
+        var show = window.scrollY > window.innerHeight * 1.3 && !clubVisible;
+        if (document.activeElement && bar.contains(document.activeElement)) show = true;
+        bar.classList.toggle('is-on', show);
+        bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+      }
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+
+      // Typewriter in the empty email box.
+      var prompts = ['First dibs on Pack merch', 'Rescue news to your inbox', 'Goldie won\u2019t chew it', 'Hear first when a pup goes missing'];
+      var ghost = bar.querySelector('.packbar__ghost');
+      var typed = bar.querySelector('.packbar__typed');
+      var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var i = 0, n = 0, dir = 1, timer = 0;
+      function tick() {
+        var p = prompts[i];
+        if (still) { typed.textContent = p; return; }
+        n += dir;
+        typed.textContent = p.slice(0, n);
+        var wait = dir > 0 ? 65 : 25;
+        if (dir > 0 && n >= p.length) { dir = -1; wait = 2200; }
+        else if (dir < 0 && n <= 0) { dir = 1; i = (i + 1) % prompts.length; wait = 400; }
+        timer = setTimeout(tick, wait);
+      }
+      tick();
+      function sync() { ghost.hidden = input.value.length > 0 || document.activeElement === input; }
+      input.addEventListener('input', sync);
+      input.addEventListener('focus', sync);
+      input.addEventListener('blur', function () { sync(); update(); });
+
+      window.TB_closeBar = function () {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', update);
+        bar.classList.remove('is-on');
+        try { sessionStorage.setItem(CLOSED_KEY, '1'); } catch (e) {}
+        setTimeout(function () { bar.hidden = true; }, 500);
+      };
+      bar.querySelector('.packbar__close').addEventListener('click', window.TB_closeBar);
+    })();
+
+    // ----- Screenshot scroller arrows -----
+    (function () {
+      var track = document.querySelector('.shots');
+      if (!track) return;
+      function step(dir) {
+        var slide = track.querySelector('img');
+        var w = slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth;
+        track.scrollBy({ left: dir * w, behavior: 'smooth' });
+      }
+      document.querySelector('.gallery__nav--prev').addEventListener('click', function () { step(-1); });
+      document.querySelector('.gallery__nav--next').addEventListener('click', function () { step(1); });
+      function arrows() {
+        var max = track.scrollWidth - track.clientWidth - 2;
+        document.querySelector('.gallery__nav--prev').disabled = track.scrollLeft <= 2;
+        document.querySelector('.gallery__nav--next').disabled = track.scrollLeft >= max;
+      }
+      track.addEventListener('scroll', arrows, { passive: true });
+      window.addEventListener('resize', arrows);
+      arrows();
     })();
   </script>
 </body>

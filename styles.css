@@ -232,7 +232,7 @@ a { color: var(--pink-deep); }
   scroll-padding-inline: 4px;
   padding: 6px 4px 22px;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
+  scrollbar-width: none;
 }
 .shots img {
   flex: 0 0 min(86%, 760px);
@@ -669,3 +669,5 @@ a { color: var(--pink-deep); }
 /* Keep short last lines from dangling */
 .hero p.sub, .lead { text-wrap: pretty; }
 .hero h1, .section h2 { text-wrap: balance; }
+
+.shots::-webkit-scrollbar { display: none; }

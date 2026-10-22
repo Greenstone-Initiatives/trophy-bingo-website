@@ -469,25 +469,51 @@
       bar.querySelector('.packbar__close').addEventListener('click', window.TB_closeBar);
     })();
 
-    // ----- Screenshot scroller arrows -----
+    // ----- Screenshot scroller: arrows + auto-advance -----
     (function () {
       var track = document.querySelector('.shots');
       if (!track) return;
-      function step(dir) {
+      var prev = document.querySelector('.gallery__nav--prev');
+      var next = document.querySelector('.gallery__nav--next');
+      function slideW() {
         var slide = track.querySelector('img');
-        var w = slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth;
-        track.scrollBy({ left: dir * w, behavior: 'smooth' });
+        return slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth;
       }
-      document.querySelector('.gallery__nav--prev').addEventListener('click', function () { step(-1); });
-      document.querySelector('.gallery__nav--next').addEventListener('click', function () { step(1); });
+      function atEnd() { return track.scrollLeft >= track.scrollWidth - track.clientWidth - 4; }
+      function step(dir) {
+        if (dir > 0 && atEnd()) track.scrollTo({ left: 0, behavior: 'smooth' });
+        else track.scrollBy({ left: dir * slideW(), behavior: 'smooth' });
+      }
+      prev.addEventListener('click', function () { step(-1); hold(); });
+      next.addEventListener('click', function () { step(1); hold(); });
       function arrows() {
-        var max = track.scrollWidth - track.clientWidth - 2;
-        document.querySelector('.gallery__nav--prev').disabled = track.scrollLeft <= 2;
-        document.querySelector('.gallery__nav--next').disabled = track.scrollLeft >= max;
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = false;
       }
       track.addEventListener('scroll', arrows, { passive: true });
       window.addEventListener('resize', arrows);
       arrows();
+
+      // Auto-advance every few seconds, looping back to the start. Pauses while
+      // the pointer is over it, while someone is touching or tabbing through
+      // it, when it's off screen, and for anyone who prefers reduced motion.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var DELAY = 3500, timer = 0, paused = false, visible = false, heldUntil = 0;
+      function tick() {
+        if (!paused && visible && Date.now() >= heldUntil && !document.hidden) step(1);
+      }
+      function hold() { heldUntil = Date.now() + 8000; }
+      var gallery = track.closest('.gallery') || track;
+      gallery.addEventListener('mouseenter', function () { paused = true; });
+      gallery.addEventListener('mouseleave', function () { paused = false; });
+      gallery.addEventListener('focusin', function () { paused = true; });
+      gallery.addEventListener('focusout', function () { paused = false; });
+      track.addEventListener('touchstart', hold, { passive: true });
+      track.addEventListener('wheel', hold, { passive: true });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }, { threshold: 0.35 }).observe(track);
+      } else { visible = true; }
+      timer = setInterval(tick, DELAY);
     })();
   </script>
 </body>

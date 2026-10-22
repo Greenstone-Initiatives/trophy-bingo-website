@@ -216,7 +216,7 @@
   <!-- ===== Join the Pack bar (slides up on scroll) ===== -->
   <aside class="packbar" id="packbar" aria-label="Join the Pack" hidden>
     <div class="packbar__in">
-      <img class="packbar__goldie" src="/assets/dogs/goldie.png" alt="">
+      <img class="packbar__goldie" src="/assets/pack/goldie.png" alt="">
       <form class="join packbar__form" novalidate>
         <div class="packbar__row">
           <strong class="packbar__title">Join the Pack</strong>
@@ -312,7 +312,7 @@
       }
 
       function open(d) {
-        dlg.querySelector('.dog-dialog__face').src = '/assets/dogs/' + d.img + '.png';
+        dlg.querySelector('.dog-dialog__face').src = '/assets/pack/' + d.img + '.png';
         dlg.querySelector('.dog-dialog__face').alt = d.name;
         dlg.querySelector('#dog-name').textContent = d.name;
         dlg.querySelector('.dog-dialog__breed').textContent = d.breed + ' · ' + d.world;
@@ -329,7 +329,7 @@
           var b = el('button', 'dog');
           b.type = 'button';
           var img = el('img', 'dog__face');
-          img.src = '/assets/dogs/' + d.img + '.png';
+          img.src = '/assets/pack/' + d.img + '.png';
           img.alt = '';
           img.loading = 'lazy';
           b.appendChild(img);
@@ -469,25 +469,44 @@
       bar.querySelector('.packbar__close').addEventListener('click', window.TB_closeBar);
     })();
 
-    // ----- Screenshot scroller arrows -----
+    // ----- Screenshots: a slow, endless drift that pauses under the mouse -----
     (function () {
+      var gallery = document.querySelector('.gallery');
       var track = document.querySelector('.shots');
-      if (!track) return;
-      function step(dir) {
-        var slide = track.querySelector('img');
-        var w = slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth;
-        track.scrollBy({ left: dir * w, behavior: 'smooth' });
+      if (!gallery || !track) return;
+      var prev = document.querySelector('.gallery__nav--prev');
+      var next = document.querySelector('.gallery__nav--next');
+
+      // Reduced motion: keep the hand-scrolled strip with arrows instead.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        function step(dir) {
+          var slide = track.querySelector('img');
+          track.scrollBy({ left: dir * (slide ? slide.getBoundingClientRect().width + 18 : track.clientWidth), behavior: 'smooth' });
+        }
+        prev.addEventListener('click', function () { step(-1); });
+        next.addEventListener('click', function () { step(1); });
+        return;
       }
-      document.querySelector('.gallery__nav--prev').addEventListener('click', function () { step(-1); });
-      document.querySelector('.gallery__nav--next').addEventListener('click', function () { step(1); });
-      function arrows() {
-        var max = track.scrollWidth - track.clientWidth - 2;
-        document.querySelector('.gallery__nav--prev').disabled = track.scrollLeft <= 2;
-        document.querySelector('.gallery__nav--next').disabled = track.scrollLeft >= max;
+
+      // Duplicate the set once so the strip can loop with no seam.
+      var imgs = [].slice.call(track.querySelectorAll('img'));
+      imgs.forEach(function (img) {
+        img.loading = 'eager';
+        var copy = img.cloneNode(true);
+        copy.alt = '';
+        copy.setAttribute('aria-hidden', 'true');
+        track.appendChild(copy);
+      });
+      gallery.style.setProperty('--drift', (imgs.length * 9) + 's');
+      track.removeAttribute('tabindex');
+      gallery.classList.add('is-drifting');
+
+      // Save the battery when the strip is off screen.
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (en) {
+          gallery.classList.toggle('is-offscreen', !en[0].isIntersecting);
+        }).observe(gallery);
       }
-      track.addEventListener('scroll', arrows, { passive: true });
-      window.addEventListener('resize', arrows);
-      arrows();
     })();
   </script>
 </body>

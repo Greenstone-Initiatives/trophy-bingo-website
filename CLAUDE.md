@@ -11,8 +11,8 @@ the game hosted on iWin. It **hands off** to iWin — every Play button opens
 embedded (an in-page iframe was janky across browsers; see README).
 
 Hosted on **Cloudflare**: static assets plus one small Worker (`worker.js`)
-that handles the members sign-up at `/api/join`, configured by `wrangler.jsonc`. Live at **greenstone.games/trophybingo/** (the root
-302-redirects there) and <https://trophy-bingo.gsii.workers.dev/trophybingo/>.
+that handles the members sign-up at `/api/join`, configured by `wrangler.jsonc`. Live at **greenstone.games** and **greenstone.games/trophybingo/** (the
+root serves the same page via `worker.js`) and <https://trophy-bingo.gsii.workers.dev/trophybingo/>.
 See `README.md`.
 
 ## Deploying: staging first, then approve
@@ -24,7 +24,8 @@ See `README.md`.
   <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>. It has no custom
   domains, so it can never touch greenstone.games. On staging `worker.js` runs
   for every request and adds `X-Robots-Tag: noindex` plus a disallow-all
-  robots.txt. In production it runs only for `/api/*`; pages stay static.
+  robots.txt. In production it runs only for `/api/*` and `/` (which serves
+  the Trophy Bingo page); everything else stays static.
 - Keep a pull request `staging` → `main` open. **James reviews the staging URL
   and approves in chat; Claude then merges the PR**, which deploys to
   greenstone.games. Never push design or copy changes straight to `main`.

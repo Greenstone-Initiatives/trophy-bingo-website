@@ -17,8 +17,9 @@
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
-    // Pages and files go straight to static assets; only the API hits the Worker.
-    "run_worker_first": ["/api/*"]
+    // Pages and files go straight to static assets; only the API and the
+    // site root (which serves the Trophy Bingo page) hit the Worker.
+    "run_worker_first": ["/api/*", "/"]
   },
   "kv_namespaces": [
     { "binding": "MEMBERS", "id": "029e857837064be4825858090d363272" }

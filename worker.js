@@ -1,7 +1,7 @@
 // Trophy Bingo site Worker. Plain JS, no build step.
 //
-// Production: runs only for /api/* (wrangler.jsonc run_worker_first); every
-// page and asset is served straight from static assets.
+// Production: runs for /api/* and for the site root, which serves the same
+// page as /trophybingo/. Everything else comes straight from static assets.
 // Staging: runs for every request and adds noindex so search engines stay out.
 //
 // POST /api/join  -> adds a member to the MEMBERS KV namespace.
@@ -14,6 +14,15 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/api/join") return join(request, env);
+
+    // The site root serves the Trophy Bingo page too (same page as /trophybingo/).
+    if (url.pathname === "/") {
+      const page = await env.ASSETS.fetch(new Request(new URL("/trophybingo/", url), request));
+      if (!env.STAGING) return page;
+      const out = new Response(page.body, page);
+      out.headers.set("X-Robots-Tag", "noindex, nofollow");
+      return out;
+    }
 
     if (env.STAGING && url.pathname === "/robots.txt") {
       return new Response("User-agent: *\nDisallow: /\n", {

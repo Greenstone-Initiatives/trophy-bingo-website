@@ -1,6 +1,3 @@
 # Cloudflare redirects.  https://developers.cloudflare.com/workers/static-assets/redirects/
-# Trophy Bingo's top page lives at /trophybingo/. The site root sends
-# visitors there for now (302, so the root is free to become the
-# Greenstone Games home later).
-/              /trophybingo/   302
-/index.html    /trophybingo/   302
+# The Trophy Bingo page is served at both / (by worker.js) and /trophybingo/.
+/index.html    /   301

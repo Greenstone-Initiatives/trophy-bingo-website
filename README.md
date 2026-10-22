@@ -4,7 +4,7 @@ The landing page for **Trophy Bingo** — the free dog-rescue action-bingo game.
 Its job is to get visitors playing: it shows off the game and hands everyone off
 to iWin, where Trophy Bingo actually lives.
 
-Home: **greenstone.games/trophybingo/**. The site root redirects there.
+Home: **greenstone.games** and **greenstone.games/trophybingo/** (same page).
 
 - **Play the game:** <https://iwin.com/free-games/play/trophy-bingo>
 - **Game page on iWin:** <https://iwin.com/games/trophy-bingo>
@@ -22,7 +22,7 @@ trophybingo/
 worker.js         Members sign-up (/api/join) + staging noindex
 styles.css        All styling (candy/playful brand)
 _headers          Caching + security headers
-_redirects        Root → /trophybingo/
+_redirects        /index.html → /
 assets/
   logo.png        Trophy Bingo wordmark
   favicon.png     App-icon (Goldie + B7 ball) — favicon & social image
@@ -79,7 +79,7 @@ to this repo through Workers Builds:
 
 - **Production:** <https://greenstone.games/trophybingo/> (also
   www.greenstone.games and <https://trophy-bingo.gsii.workers.dev>). The root
-  `/` redirects to `/trophybingo/`.
+  `/` serves the same page, via `worker.js`.
 - **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>,
   a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
   branch with `bunx wrangler deploy --env staging`. No custom domains, and

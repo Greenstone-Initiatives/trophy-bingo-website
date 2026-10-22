@@ -84,8 +84,8 @@ to this repo through Workers Builds:
 
 1. Commit the change to `staging` and push. Staging redeploys in a minute.
 2. Review it on the staging URL.
-3. Approve by merging the `staging` → `main` pull request. The merge deploys
-   to production automatically (`bunx wrangler deploy`).
+3. On approval, the `staging` → `main` pull request is merged. The merge
+   deploys to production automatically (`bunx wrangler deploy`).
 
 A manual deploy, if ever needed, is `bunx wrangler deploy` from the repo root.
 Config lives in `wrangler.jsonc`; `.assetsignore` keeps repo files (docs,

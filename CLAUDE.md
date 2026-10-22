@@ -23,9 +23,9 @@ See `README.md`.
   the `trophy-bingo-staging` Worker (`bunx wrangler deploy --env staging`) at
   <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>. It has no custom
   domains, so it can never touch greenstone.games.
-- Open (or update) a pull request `staging` → `main`. **James approves by
-  merging it**; the merge deploys to greenstone.games. Never push design or copy
-  changes straight to `main`.
+- Keep a pull request `staging` → `main` open. **James reviews the staging URL
+  and approves in chat; Claude then merges the PR**, which deploys to
+  greenstone.games. Never push design or copy changes straight to `main`.
 - Check the page locally first, push to `staging`, confirm the staging build
   succeeded and shows the change, then hand James the staging URL and the PR.
 - If a manual deploy is ever needed: `bunx wrangler deploy` from the repo root.

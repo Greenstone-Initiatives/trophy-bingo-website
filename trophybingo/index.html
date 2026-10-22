@@ -68,25 +68,9 @@
       <div class="hero__scrim"></div>
 
       <div class="wrap hero__inner">
-        <img class="hero__logo" src="/assets/logo.png" alt="Trophy Bingo" width="438" height="198">
         <span class="hero__tag">⭐ 4.28 / 5 &nbsp;•&nbsp; Free to play</span>
         <h1>Join Goldie on the bingo adventure of a lifetime!</h1>
         <p class="sub">Team up with Goldie the golden retriever &amp; friends for some bonus bingo fun. Rescue lost dogs, spin the wheel, and win big.</p>
-
-        <!-- Hand-off: the poster and button open the full game on iWin, where
-             coins, memberships and the Spin Wheel all work first-party. -->
-        <a class="stage stage--link js-play" href="https://iwin.com/free-games/play/trophy-bingo"
-           target="_blank" rel="noopener" aria-label="Play Trophy Bingo free on iWin">
-          <span class="facade" style="background-image:url('/assets/hero.png')">
-            <span class="facade__play">
-              <span class="facade__disc">
-                <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-              </span>
-              <span class="facade__label">Play Trophy Bingo</span>
-              <span class="facade__note">Free on iWin.com — no download</span>
-            </span>
-          </span>
-        </a>
 
         <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
       </div>
@@ -162,18 +146,6 @@
   <script>
     // Year
     document.getElementById('yr').textContent = new Date().getFullYear();
-
-    // The big hero logo stands in for the header logo; the header logo fades
-    // in once the hero logo scrolls out of view.
-    (function () {
-      var header = document.querySelector('.site-header');
-      var heroLogo = document.querySelector('.hero__logo');
-      if (!header || !heroLogo || !('IntersectionObserver' in window)) return;
-      header.classList.add('brand-hidden');
-      new IntersectionObserver(function (entries) {
-        header.classList.toggle('brand-hidden', entries[0].isIntersecting);
-      }, { rootMargin: '-68px 0px 0px 0px' }).observe(heroLogo);
-    })();
 
     // Forward ad tracking params (utm_*, fbclid) from the ad link on to every
     // iWin link, so iWin sees where the traffic came from too.

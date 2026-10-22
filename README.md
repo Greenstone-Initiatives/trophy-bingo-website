@@ -78,7 +78,9 @@ to this repo through Workers Builds:
   `/` redirects to `/trophybingo/`.
 - **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>,
   a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
-  branch with `bunx wrangler deploy --env staging`. No custom domains.
+  branch with `bunx wrangler deploy --env staging`. No custom domains, and
+  `staging-noindex.js` keeps it out of search engines (`X-Robots-Tag: noindex`,
+  disallow-all robots.txt).
 
 ### Publish an update
 

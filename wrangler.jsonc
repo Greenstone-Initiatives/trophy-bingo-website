@@ -18,13 +18,17 @@
   },
   "env": {
     // Staging: its own Worker on workers.dev only. No custom domains, so a
-    // staging deploy can never touch greenstone.games.
+    // staging deploy can never touch greenstone.games. A tiny script adds
+    // noindex to every response so search engines stay out.
     "staging": {
       "name": "trophy-bingo-staging",
+      "main": "staging-noindex.js",
       "workers_dev": true,
       "routes": [],
       "assets": {
-        "directory": "."
+        "directory": ".",
+        "binding": "ASSETS",
+        "run_worker_first": true
       }
     }
   }

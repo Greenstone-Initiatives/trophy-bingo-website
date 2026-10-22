@@ -22,7 +22,9 @@ See `README.md`.
 - **Changes go to the `staging` branch first.** Every push to `staging` deploys
   the `trophy-bingo-staging` Worker (`bunx wrangler deploy --env staging`) at
   <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>. It has no custom
-  domains, so it can never touch greenstone.games.
+  domains, so it can never touch greenstone.games, and `staging-noindex.js`
+  (staging only) adds `X-Robots-Tag: noindex` and a disallow-all robots.txt.
+  Production stays pure static assets with no Worker script.
 - Keep a pull request `staging` → `main` open. **James reviews the staging URL
   and approves in chat; Claude then merges the PR**, which deploys to
   greenstone.games. Never push design or copy changes straight to `main`.
@@ -36,7 +38,8 @@ See `README.md`.
 
 - **No build tooling.** Keep it plain HTML/CSS/vanilla-JS so Joe and James can
   edit directly on GitHub. Do not add a bundler, framework, or `package.json`.
-  (`wrangler.jsonc` is deploy config, not a build step.)
+  (`wrangler.jsonc` is deploy config and `staging-noindex.js` is a staging-only
+  header shim; neither is a build step.)
 - **The page lives at `trophybingo/index.html`.** Assets live in `assets/` at
   the root. Don't introduce a `pages/` structure.
 - **The hand-off is the point.** Every Play link (`a.js-play`) opens the iWin

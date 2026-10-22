@@ -20,3 +20,4 @@ README.md
 wrangler.jsonc
 wrangler.toml
 *.md
+staging-noindex.js

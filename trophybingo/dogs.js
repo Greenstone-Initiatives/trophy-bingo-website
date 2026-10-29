@@ -8,7 +8,7 @@ window.TB_DOGS = [
     "world": "Dog Park",
     "kind": "Power Play",
     "power": "Daubs 1 random square on a card.",
-    "bio": "A charming and loving dog, determined to save her poochie pals from the Trophy Hunter, Ernest Getmyway!",
+    "bio": "A charming and loving dog, determined to save her poochie pals from the Trophy Hunter, Earnest Getmyway!",
     "fact": "This medium size dog is smart, friendly and hard working. They're great at everything they do."
   },
   {
@@ -188,7 +188,7 @@ window.TB_DOGS = [
     "world": "Beach",
     "kind": "Helper Skill",
     "power": "Chance of Diamonds marked on your Cards. Daub to collect.",
-    "bio": "Lilah considers herself the '102nd', and hopes that stopping Ernest will earn the glory she has long been waiting for.",
+    "bio": "Lilah considers herself the '102nd', and hopes that stopping Earnest will earn the glory she has long been waiting for.",
     "fact": "Dalmatian puppies are born without spots. They don't start appearing until they're 3 weeks old."
   },
   {

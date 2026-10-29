@@ -19,6 +19,7 @@ GitHub and the change is live in seconds.
 trophybingo/
   index.html      The whole page (served at /trophybingo/)
   dogs.js         The pack: names, powers, bios, breed facts
+  help/index.html Help & FAQ (served at /trophybingo/help/)
 worker.js         Members sign-up (/api/join) + staging noindex
 styles.css        All styling (candy/playful brand)
 _headers          Caching + security headers

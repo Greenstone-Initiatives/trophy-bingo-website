@@ -64,6 +64,16 @@ See `README.md`.
 - The consent wording appears in both `trophybingo/index.html` and
   `worker.js`; change them together.
 
+## Help & FAQ
+
+- `trophybingo/help/index.html` is the Help & FAQ page, plain HTML. Each answer is
+  a `<details>` with a stable id, so links like `/trophybingo/help/#blockers`
+  open the right answer. "How do I save my progress?" (`#save-progress`) is a
+  Coming soon placeholder until the new save system is documented.
+- The villain is **Earnest Getmyway** (the game's own spelling). Wrap
+  "Trophy Bingo" in visible copy in `<span class="nb">` so it never splits
+  across two lines.
+
 ## Preview
 
 ```bash

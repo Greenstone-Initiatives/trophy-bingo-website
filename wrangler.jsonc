@@ -10,23 +10,27 @@
   "compatibility_date": "2026-09-08",
   "workers_dev": true,
   "observability": { "enabled": true },
+  // trophybingo.com is the home. The other three hostnames only 301 to it
+  // (worker.js redirectTarget): www.trophybingo.com keeps the path,
+  // greenstone.games/trophybingo/x goes to trophybingo.com/x.
   "routes": [
+    { "pattern": "trophybingo.com", "custom_domain": true },
+    { "pattern": "www.trophybingo.com", "custom_domain": true },
     { "pattern": "greenstone.games", "custom_domain": true },
     { "pattern": "www.greenstone.games", "custom_domain": true }
   ],
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
-    // Pages and files go straight to static assets; only the API and the
-    // site root (which serves the Trophy Bingo page) hit the Worker.
-    "run_worker_first": ["/api/*", "/"]
+    // The Worker sees every request so it can redirect by hostname.
+    "run_worker_first": true
   },
   "kv_namespaces": [
     { "binding": "MEMBERS", "id": "029e857837064be4825858090d363272" }
   ],
   "env": {
     // Staging: its own Worker on workers.dev only. No custom domains, so a
-    // staging deploy can never touch greenstone.games. Every response gets
+    // staging deploy can never touch trophybingo.com. Every response gets
     // noindex, and sign-ups land in a separate staging store.
     "staging": {
       "name": "trophy-bingo-staging",

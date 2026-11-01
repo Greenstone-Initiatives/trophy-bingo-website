@@ -4,7 +4,8 @@ The landing page for **Trophy Bingo** — the free dog-rescue action-bingo game.
 Its job is to get visitors playing: it shows off the game and hands everyone off
 to iWin, where Trophy Bingo actually lives.
 
-Home: **greenstone.games** and **greenstone.games/trophybingo/** (same page).
+Home: **trophybingo.com**. www.trophybingo.com, greenstone.games and
+greenstone.games/trophybingo/… all 301 there.
 
 - **Play the game:** <https://iwin.com/free-games/play/trophy-bingo>
 - **Game page on iWin:** <https://iwin.com/games/trophy-bingo>
@@ -16,11 +17,12 @@ framework, no build step, no package manager. You can edit it directly on
 GitHub and the change is live in seconds.
 
 ```
-trophybingo/
-  index.html      The whole page (served at /trophybingo/)
-  dogs.js         The pack: names, powers, bios, breed facts
-  help/index.html Help & FAQ (served at /trophybingo/help/)
-worker.js         Members sign-up (/api/join) + staging noindex
+index.html        The whole page (served at /)
+dogs.js           The pack: names, powers, bios, breed facts
+help/index.html   Help & FAQ (served at /help/)
+robots.txt        Allow all + sitemap link (staging overrides it)
+sitemap.xml       / and /help/
+worker.js         Hostname redirects, members sign-up (/api/join), staging noindex
 styles.css        All styling (candy/playful brand)
 _headers          Caching + security headers
 _redirects        /index.html → /
@@ -54,13 +56,13 @@ events, so paid traffic stays measurable.
 
 Common changes:
 
-- **Copy / headlines** — edit the text in `trophybingo/index.html`.
+- **Copy / headlines** — edit the text in `index.html`.
 - **Where Play points** — every Play link is a normal `<a href="https://iwin.com/…">`
   with `class="js-play"`; change the URL on those anchors.
 - **Colours / spacing** — the palette is CSS variables at the top of
   `styles.css` (`:root { --pink … }`).
 - **Meta Pixel** — paste your Pixel ID into `META_PIXEL_ID` near the top of
-  `trophybingo/index.html` (tracking stays off until you do).
+  `index.html` (tracking stays off until you do).
 - **Screenshots** — drop new images in `assets/screenshots/` and update the
   `<img>` tags in the "Take a peek" section.
 
@@ -70,7 +72,7 @@ No tooling needed — just serve the folder:
 
 ```bash
 python -m http.server 8000
-# then open http://localhost:8000/trophybingo/
+# then open http://localhost:8000/
 ```
 
 ## Deploying (Cloudflare)
@@ -78,10 +80,12 @@ python -m http.server 8000
 The site is static assets on a Cloudflare Worker (`trophy-bingo`), connected
 to this repo through Workers Builds:
 
-- **Production:** <https://greenstone.games/trophybingo/> (also
-  www.greenstone.games and <https://trophy-bingo.gsii.workers.dev>). The root
-  `/` serves the same page, via `worker.js`.
-- **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/trophybingo/>,
+- **Production:** <https://trophybingo.com/> (also
+  <https://trophy-bingo.gsii.workers.dev>). `worker.js` 301s
+  www.trophybingo.com to the apex with the same path, and greenstone.games,
+  www.greenstone.games and old `/trophybingo/…` paths to trophybingo.com
+  (`/trophybingo/help/` → `/help/`).
+- **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/>,
   a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
   branch with `bunx wrangler deploy --env staging`. No custom domains, and
   `worker.js` keeps it out of search engines (`X-Robots-Tag: noindex`,

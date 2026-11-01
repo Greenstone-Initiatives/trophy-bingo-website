@@ -1,10 +1,16 @@
 // Trophy Bingo site Worker. Plain JS, no build step.
 //
-// Production: runs for /api/* and for the site root, which serves the same
-// page as /trophybingo/. Everything else comes straight from static assets.
-// Staging: runs for every request and adds noindex so search engines stay out.
+// Production: runs for every request.
+//   trophybingo.com            -> the site (static assets), plus /api/join.
+//   www.trophybingo.com        -> 301 to trophybingo.com, same path and query.
+//   greenstone.games, www.     -> 301 to trophybingo.com. /trophybingo/x maps to /x.
+//   Old /trophybingo/ paths on trophybingo.com itself also 301 to the new path.
+// Staging: no redirects; every response gets noindex so search engines stay out.
 //
 // POST /api/join  -> adds a member to the MEMBERS KV namespace.
+
+const CANONICAL_HOST = "trophybingo.com";
+const REDIRECT_HOSTS = new Set(["www.trophybingo.com", "greenstone.games", "www.greenstone.games"]);
 
 const CONSENT_TEXT =
   "Yes, send me Trophy Bingo news, member rewards and offers from Greenstone Games by email. I can unsubscribe at any time.";
@@ -13,16 +19,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === "/api/join") return join(request, env);
-
-    // The site root serves the Trophy Bingo page too (same page as /trophybingo/).
-    if (url.pathname === "/") {
-      const page = await env.ASSETS.fetch(new Request(new URL("/trophybingo/", url), request));
-      if (!env.STAGING) return page;
-      const out = new Response(page.body, page);
-      out.headers.set("X-Robots-Tag", "noindex, nofollow");
-      return out;
+    if (!env.STAGING) {
+      const target = redirectTarget(url);
+      if (target) return Response.redirect(target, 301);
     }
+
+    if (url.pathname === "/api/join") return join(request, env);
 
     if (env.STAGING && url.pathname === "/robots.txt") {
       return new Response("User-agent: *\nDisallow: /\n", {
@@ -37,6 +39,17 @@ export default {
     return out;
   },
 };
+
+// Where a request should be sent instead, or null to serve it here.
+function redirectTarget(url) {
+  const host = url.hostname.toLowerCase();
+  const oldPath = url.pathname === "/trophybingo" || url.pathname.startsWith("/trophybingo/");
+  if (!REDIRECT_HOSTS.has(host) && !(host === CANONICAL_HOST && oldPath)) return null;
+
+  let path = url.pathname;
+  if (oldPath) path = "/" + path.slice("/trophybingo".length).replace(/^\/+/, "");
+  return "https://" + CANONICAL_HOST + path + url.search;
+}
 
 function reply(body, status = 200, staging = false) {
   const headers = { "content-type": "application/json", "cache-control": "no-store" };

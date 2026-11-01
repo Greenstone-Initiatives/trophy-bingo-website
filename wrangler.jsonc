@@ -10,14 +10,12 @@
   "compatibility_date": "2026-09-08",
   "workers_dev": true,
   "observability": { "enabled": true },
-  // trophybingo.com is the home. www.trophybingo.com 301s to it, and so does
-  // any /trophybingo/ path on the greenstone.games hosts (worker.js
-  // redirectTarget). greenstone.games itself is served, not redirected.
+  // trophybingo.com is the home. www.trophybingo.com 301s to it (worker.js
+  // redirectTarget). greenstone.games is its own Worker
+  // (greenstone-games-website repo), which 301s old /trophybingo/ paths here.
   "routes": [
     { "pattern": "trophybingo.com", "custom_domain": true },
-    { "pattern": "www.trophybingo.com", "custom_domain": true },
-    { "pattern": "greenstone.games", "custom_domain": true },
-    { "pattern": "www.greenstone.games", "custom_domain": true }
+    { "pattern": "www.trophybingo.com", "custom_domain": true }
   ],
   "assets": {
     "directory": ".",

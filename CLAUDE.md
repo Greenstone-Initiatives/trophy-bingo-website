@@ -14,9 +14,11 @@ Hosted on **Cloudflare**: static assets plus one small Worker (`worker.js`)
 that handles the members sign-up at `/api/join` and the hostname redirects,
 configured by `wrangler.jsonc`. Live at **trophybingo.com** and
 <https://trophy-bingo.gsii.workers.dev/>. www.trophybingo.com and any old
-`/trophybingo/…` path (on any of the hostnames) 301 to trophybingo.com (apex is
-canonical; `/trophybingo/x` maps to `/x`). greenstone.games itself is NOT
-redirected; it will get its own placeholder content.
+`/trophybingo/…` path 301 to trophybingo.com (apex is canonical;
+`/trophybingo/x` maps to `/x`). greenstone.games is a separate Worker
+(`greenstone-games-website` repo); it carries the Terms of Service and Privacy
+Policy that this site's footer links to. If this site starts collecting
+anything new, update that repo's `privacy/index.html` to match.
 See `README.md`.
 
 ## Deploying: staging first, then approve

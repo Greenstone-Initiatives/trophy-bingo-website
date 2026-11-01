@@ -5,7 +5,7 @@ Its job is to get visitors playing: it shows off the game and hands everyone off
 to iWin, where Trophy Bingo actually lives.
 
 Home: **trophybingo.com**. www.trophybingo.com and greenstone.games/trophybingo/…
-301 there. greenstone.games itself is left for its own content.
+301 there. greenstone.games is the studio site (its own repo and Worker).
 
 - **Play the game:** <https://iwin.com/free-games/play/trophy-bingo>
 - **Game page on iWin:** <https://iwin.com/games/trophy-bingo>
@@ -83,9 +83,8 @@ to this repo through Workers Builds:
 - **Production:** <https://trophybingo.com/> (also
   <https://trophy-bingo.gsii.workers.dev>). `worker.js` 301s
   www.trophybingo.com to the apex with the same path, and any `/trophybingo/…`
-  path (on greenstone.games, www.greenstone.games or trophybingo.com) to
-  trophybingo.com (`/trophybingo/help/` → `/help/`). Other greenstone.games
-  paths are served as-is until greenstone.games gets its own content.
+  path on trophybingo.com to the new path (`/trophybingo/help/` → `/help/`).
+  The greenstone.games Worker does the same for its old `/trophybingo/` links.
 - **Staging:** <https://trophy-bingo-staging.gsii.workers.dev/>,
   a separate Worker (`trophy-bingo-staging`) deployed from the `staging`
   branch with `bunx wrangler deploy --env staging`. No custom domains, and

@@ -13,9 +13,10 @@ embedded (an in-page iframe was janky across browsers; see README).
 Hosted on **Cloudflare**: static assets plus one small Worker (`worker.js`)
 that handles the members sign-up at `/api/join` and the hostname redirects,
 configured by `wrangler.jsonc`. Live at **trophybingo.com** and
-<https://trophy-bingo.gsii.workers.dev/>. www.trophybingo.com, greenstone.games,
-www.greenstone.games and old `/trophybingo/…` paths all 301 to trophybingo.com
-(apex is canonical; `/trophybingo/x` maps to `/x`).
+<https://trophy-bingo.gsii.workers.dev/>. www.trophybingo.com and any old
+`/trophybingo/…` path (on any of the hostnames) 301 to trophybingo.com (apex is
+canonical; `/trophybingo/x` maps to `/x`). greenstone.games itself is NOT
+redirected; it will get its own placeholder content.
 See `README.md`.
 
 ## Deploying: staging first, then approve

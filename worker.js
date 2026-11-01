@@ -3,14 +3,18 @@
 // Production: runs for every request.
 //   trophybingo.com            -> the site (static assets), plus /api/join.
 //   www.trophybingo.com        -> 301 to trophybingo.com, same path and query.
-//   greenstone.games, www.     -> 301 to trophybingo.com. /trophybingo/x maps to /x.
+//   greenstone.games, www.     -> /trophybingo/x 301s to trophybingo.com/x. Everything
+//                                 else there is served as-is until greenstone.games
+//                                 gets its own content.
 //   Old /trophybingo/ paths on trophybingo.com itself also 301 to the new path.
 // Staging: no redirects; every response gets noindex so search engines stay out.
 //
 // POST /api/join  -> adds a member to the MEMBERS KV namespace.
 
 const CANONICAL_HOST = "trophybingo.com";
-const REDIRECT_HOSTS = new Set(["www.trophybingo.com", "greenstone.games", "www.greenstone.games"]);
+// www.trophybingo.com redirects everything; the others redirect only /trophybingo/ paths.
+const WWW_HOST = "www.trophybingo.com";
+const OLD_PATH_HOSTS = new Set([CANONICAL_HOST, "greenstone.games", "www.greenstone.games"]);
 
 const CONSENT_TEXT =
   "Yes, send me Trophy Bingo news, member rewards and offers from Greenstone Games by email. I can unsubscribe at any time.";
@@ -44,7 +48,7 @@ export default {
 function redirectTarget(url) {
   const host = url.hostname.toLowerCase();
   const oldPath = url.pathname === "/trophybingo" || url.pathname.startsWith("/trophybingo/");
-  if (!REDIRECT_HOSTS.has(host) && !(host === CANONICAL_HOST && oldPath)) return null;
+  if (host !== WWW_HOST && !(OLD_PATH_HOSTS.has(host) && oldPath)) return null;
 
   let path = url.pathname;
   if (oldPath) path = "/" + path.slice("/trophybingo".length).replace(/^\/+/, "");

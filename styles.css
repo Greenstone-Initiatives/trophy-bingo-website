@@ -95,16 +95,16 @@ a { color: var(--pink-deep); }
   gap: 16px;
   min-height: 104px;
 }
-.brand { display: block; padding: 8px 0; }
+.brand { display: block; padding: 8px 0; flex-shrink: 0; }
 .brand img { height: 88px; width: auto; }
-.nav { display: flex; align-items: center; gap: 28px; }
+.nav { display: flex; align-items: center; gap: 22px; }
 
 /* "Relaunched!" flash beside the logo: the pill from the relaunch cover art. */
 .flash {
   margin-right: auto;
   font-family: var(--font-head);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: .9rem;
   line-height: 1;
   letter-spacing: .03em;
   text-transform: uppercase;
@@ -118,11 +118,8 @@ a { color: var(--pink-deep); }
   text-shadow: 0 1px 0 rgba(120,0,40,.35);
   transform: rotate(-5deg);
 }
-@media (min-width: 1000px) and (max-width: 1099px) {
-  .flash { font-size: .85rem; }
-}
 /* Narrowest full-nav widths: the nav needs the room, so the flash steps aside. */
-@media (min-width: 920px) and (max-width: 999px) {
+@media (min-width: 920px) and (max-width: 1039px) {
   .flash { display: none; }
   .brand { margin-right: auto; }
 }

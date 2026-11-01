@@ -1,3 +1,2 @@
 # Cloudflare redirects.  https://developers.cloudflare.com/workers/static-assets/redirects/
-# The Trophy Bingo page is served at both / (by worker.js) and /trophybingo/.
 /index.html    /   301

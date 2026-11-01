@@ -854,3 +854,20 @@ a { color: var(--pink-deep); }
   padding: .3em .9em;
 }
 .faq__empty { text-align: center; font-weight: 700; color: var(--ink-soft); padding: 30px 0 0; }
+
+/* ---------- Privacy Policy page ---------- */
+.policy { max-width: 780px; padding-top: 34px; padding-bottom: 70px; color: var(--ink); line-height: 1.65; }
+.policy p, .policy li { font-size: 1.02rem; }
+.policy__date { font-weight: 800; color: var(--ink-soft); }
+.policy h2 {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  color: var(--pink-deep);
+  margin: 46px 0 8px;
+  scroll-margin-top: 120px;
+}
+.policy h3 { font-family: var(--font-head); font-weight: 600; font-size: 1.15rem; margin: 26px 0 4px; }
+.policy ul { padding-left: 1.2em; }
+.policy li { margin: 4px 0; }
+.policy a { color: var(--pink-deep); font-weight: 700; word-break: break-word; }

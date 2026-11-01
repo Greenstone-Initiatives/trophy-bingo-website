@@ -97,13 +97,13 @@ a { color: var(--pink-deep); }
 }
 .brand { display: block; padding: 8px 0; }
 .brand img { height: 88px; width: auto; }
-.nav { display: flex; align-items: center; gap: 22px; }
+.nav { display: flex; align-items: center; gap: 28px; }
 .nav a.navlink {
   font-family: var(--font-head);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ink);
   text-decoration: none;
-  font-size: 1.02rem;
+  font-size: 1.25rem;
 }
 .nav a.navlink:hover { color: var(--pink-deep); }
 
@@ -329,6 +329,9 @@ a { color: var(--pink-deep); }
 }
 .story .section h2, .story h2 { text-align: left; color: var(--ink); }
 .story .lead { text-align: left; margin: 0 0 26px; }
+.story { padding-bottom: 36px; }
+.story__cta { text-align: center; margin-top: 40px; }
+.story + .pack { padding-top: 44px; }
 .story__art img {
   width: 100%;
   height: auto;

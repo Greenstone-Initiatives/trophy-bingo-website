@@ -16,9 +16,8 @@ configured by `wrangler.jsonc`. Live at **trophybingo.com** and
 <https://trophy-bingo.gsii.workers.dev/>. www.trophybingo.com and any old
 `/trophybingo/…` path 301 to trophybingo.com (apex is canonical;
 `/trophybingo/x` maps to `/x`). greenstone.games is a separate Worker
-(`greenstone-games-website` repo); it carries the Terms of Service and Privacy
-Policy that this site's footer links to. If this site starts collecting
-anything new, update that repo's `privacy/index.html` to match.
+(`greenstone-games-website` repo) with its own terms. This site carries its own
+`/terms/` and `/privacy/`; the footer links to both.
 See `README.md`.
 
 ## Deploying: staging first, then approve
@@ -79,6 +78,12 @@ See `README.md`.
 - The villain is **Earnest Getmyway** (the game's own spelling). Wrap
   "Trophy Bingo" in visible copy in `<span class="nb">` so it never splits
   across two lines.
+
+## Terms of Service
+
+- `terms/index.html`: covers trophybingo.com, shop.trophybingo.com, the
+  Members Club, the Shop and promotions. Play and in-game purchases fall under
+  iWin's terms. Contact support@trophybingo.com.
 
 ## Privacy Policy
 

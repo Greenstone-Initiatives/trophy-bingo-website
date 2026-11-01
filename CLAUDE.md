@@ -74,8 +74,8 @@ See `README.md`.
 
 - `help/index.html` is the Help & FAQ page, plain HTML. Each answer is
   a `<details>` with a stable id, so links like `/help/#blockers`
-  open the right answer. "How do I save my progress?" (`#save-progress`) is a
-  Coming soon placeholder until the new save system is documented.
+  open the right answer (`#save-progress`, `#blockers` and so on). The Q&A
+  comes from Joe's checked help fragment; the game's term is "Powerplay".
 - The villain is **Earnest Getmyway** (the game's own spelling). Wrap
   "Trophy Bingo" in visible copy in `<span class="nb">` so it never splits
   across two lines.

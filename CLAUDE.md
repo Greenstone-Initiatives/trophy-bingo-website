@@ -80,6 +80,16 @@ See `README.md`.
   "Trophy Bingo" in visible copy in `<span class="nb">` so it never splits
   across two lines.
 
+## Privacy Policy
+
+- `privacy/index.html`, adapted from the Greenstone privacy-notice template
+  (Core notice + Schedule A regional terms). Controller: Greenstone Business
+  Services Inc. dba Greenstone Games; processor: Appreciation Engine Inc.;
+  contact privacy@trophybingo.com. Update "Who we share it with" when a
+  service provider is added, and change the date at the top.
+- The Meta Pixel loader skips loading when the browser sends Global Privacy
+  Control; the policy promises this, so keep it.
+
 ## Preview
 
 ```bash

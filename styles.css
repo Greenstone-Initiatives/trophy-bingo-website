@@ -98,12 +98,51 @@ a { color: var(--pink-deep); }
 .brand { display: block; padding: 8px 0; }
 .brand img { height: 88px; width: auto; }
 .nav { display: flex; align-items: center; gap: 28px; }
+
+/* "Relaunched!" flash beside the logo: the pill from the relaunch cover art. */
+.flash {
+  margin-right: auto;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  padding: .5em 1em .55em;
+  background: linear-gradient(180deg, #ff7aa2 0%, #f23d73 55%, #d6225b 100%);
+  border: 3px solid #fff;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2.5px #24358a, 0 5px 0 2px #24358a, inset 0 2px 0 rgba(255,255,255,.35);
+  text-shadow: 0 1px 0 rgba(120,0,40,.35);
+  transform: rotate(-5deg);
+}
+@media (min-width: 1000px) and (max-width: 1099px) {
+  .flash { font-size: .85rem; }
+}
+/* Narrowest full-nav widths: the nav needs the room, so the flash steps aside. */
+@media (min-width: 920px) and (max-width: 999px) {
+  .flash { display: none; }
+  .brand { margin-right: auto; }
+}
+@media (max-width: 919px) {
+  .flash { font-size: .82rem; padding: .45em .85em .5em; border-width: 2.5px; }
+}
+@media (max-width: 420px) {
+  .brand img { height: 70px; }
+  .flash { font-size: .72rem; padding: .42em .75em .46em; }
+}
+@media (max-width: 339px) {
+  .flash { display: none; }
+}
 .nav a.navlink {
   font-family: var(--font-head);
   font-weight: 600;
   color: var(--ink);
   text-decoration: none;
   font-size: 1.25rem;
+  white-space: nowrap;
 }
 .nav a.navlink:hover { color: var(--pink-deep); }
 

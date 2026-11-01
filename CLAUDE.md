@@ -75,7 +75,7 @@ See `README.md`.
 - `help/index.html` is the Help & FAQ page, plain HTML. Each answer is
   a `<details>` with a stable id, so links like `/help/#blockers`
   open the right answer (`#save-progress`, `#blockers` and so on). The Q&A
-  comes from Joe's checked help fragment; the game's term is "Powerplay".
+  comes from Joe's checked help fragment; the site's term is "Power Play" (two words).
 - The villain is **Earnest Getmyway** (the game's own spelling). Wrap
   "Trophy Bingo" in visible copy in `<span class="nb">` so it never splits
   across two lines.

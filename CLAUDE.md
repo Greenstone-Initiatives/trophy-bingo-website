@@ -69,6 +69,19 @@ See `README.md`.
 - The consent wording appears in both `index.html` and
   `worker.js`; change them together.
 
+## FairShare sign-in
+
+- Every page loads the AE Connect snippet for the Greenstone Games FairShare
+  account (framework 624, application 166), just above `</body>`, with an
+  `AEJSReady` hook that exposes `window.tbAEJS`. trophybingo.com and the staging
+  host are on that account's allowlist; the snippet is refused on any host that isn't.
+- It doesn't draw anything. Sign-in buttons (`data-ae-register-link="<service>"`)
+  are added per page for the services Trophy Bingo uses; a button for a service
+  that isn't switched on in the account leads to a missing page.
+- The Members Club form still posts to `/api/join` (Workers KV), not to FairShare.
+- The Privacy Policy's "Website and advertising data" line covers FairShare's
+  cookies; keep it in step if the sign-in changes.
+
 ## Help & FAQ
 
 - `help/index.html` is the Help & FAQ page, plain HTML. Each answer is

@@ -79,6 +79,8 @@ See `README.md`.
   are added per page for the services Trophy Bingo uses; a button for a service
   that isn't switched on in the account leads to a missing page.
 - The Members Club form still posts to `/api/join` (Workers KV), not to FairShare.
+- The footer links to the account's FairShare Privacy Center
+  (https://get.myfairshare.io/privacycenter/customer/291/166/login).
 - The Privacy Policy's "Website and advertising data" line covers FairShare's
   cookies; keep it in step if the sign-in changes.
 

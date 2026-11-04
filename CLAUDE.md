@@ -63,11 +63,31 @@ See `README.md`.
 - Dog names, breeds, worlds, Power Plays / Helper Skills, bios and breed facts
   live in `dogs.js` (from the game's collections design matrix).
   Faces are `assets/pack/<img>.png` (head sprites with the game's eye sprites fitted); story art is `assets/story/`.
-- Sign-ups POST to `/api/join` and land in Workers KV as `member:<email>`
+- Sign-ups also POST to `/api/join` and land in Workers KV as `member:<email>`
   with the consent wording, timestamp and UTM source. Production store:
   `trophy-bingo-members`; staging store: `trophy-bingo-members-staging`.
 - The consent wording appears in both `index.html` and
   `worker.js`; change them together.
+
+## FairShare sign-in
+
+- Every page loads the AE Connect snippet for the Greenstone Games FairShare
+  account (framework 624, application 166), just above `</body>`, with an
+  `AEJSReady` hook that exposes `window.tbAEJS`. trophybingo.com and the staging
+  host are on that account's allowlist; the snippet is refused on any host that isn't.
+- It doesn't draw anything. Sign-in buttons (`data-ae-register-link="<service>"`)
+  are added per page for the services Trophy Bingo uses; a button for a service
+  that isn't switched on in the account leads to a missing page.
+- Both Members Club forms (the club section and the Join the Pack bar) are FairShare
+  register forms (`data-ae-register-form="email"`). On a valid submit the page also
+  posts a copy to `/api/join` (Workers KV, with first name and consent wording,
+  `keepalive`), then FairShare takes over and returns the visitor to `/?joined=1#club`,
+  where the club form says thanks. If the FairShare script hasn't loaded, `/api/join`
+  alone takes the sign-up. On staging the return URL points at the staging host.
+- The footer links to the account's FairShare Privacy Center
+  (https://get.myfairshare.io/privacycenter/customer/291/166/login).
+- The Privacy Policy's "Website and advertising data" line covers FairShare's
+  cookies; keep it in step if the sign-in changes.
 
 ## Help & FAQ
 

@@ -188,7 +188,7 @@
           <span class="kicker">Members Club</span>
           <h2>Join the Pack</h2>
           <p class="lead">Pack members get the news first and earn <span class="nb">Trophy Bingo</span> merch made only for the club. Sign up free and Goldie will be in touch.</p>
-          <form class="join" novalidate>
+          <form class="join" data-ae-register-form="email" data-ae-return="https://trophybingo.com/?joined=1#club" novalidate>
             <div class="join__row">
               <label class="join__field">
                 <span>First name</span>
@@ -225,7 +225,7 @@
   <aside class="packbar" id="packbar" aria-label="Join the Pack" hidden>
     <div class="packbar__in">
       <img class="packbar__goldie" src="/assets/pack/goldie.png" alt="">
-      <form class="join packbar__form" novalidate>
+      <form class="join packbar__form" data-ae-register-form="email" data-ae-return="https://trophybingo.com/?joined=1#club" novalidate>
         <div class="packbar__row">
           <strong class="packbar__title">Join the Pack</strong>
           <label class="packbar__field">
@@ -260,7 +260,7 @@
         <a href="/help/">Help &amp; FAQ</a>
         <a class="js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Now on iWin</a>
       </div>
-      <p class="fine">© <span id="yr"></span> <a href="https://greenstone.games/">Greenstone Games</a> · <a href="/terms/">Terms of Service</a> · <a href="/privacy/">Privacy Policy</a></p>
+      <p class="fine">© <span id="yr"></span> <a href="https://greenstone.games/">Greenstone Games</a> · <a href="/terms/">Terms of Service</a> · <a href="/privacy/">Privacy Policy</a> · <a href="https://get.myfairshare.io/privacycenter/customer/291/166/login" target="_blank" rel="noopener">Privacy Center</a></p>
     </div>
   </footer>
 
@@ -373,19 +373,52 @@
       var MEMBER_KEY = 'tb-pack-member';
       function joined() { try { localStorage.setItem(MEMBER_KEY, '1'); } catch (e) {} }
 
+      // Sign-ups go to FairShare (the forms carry data-ae-register-form, and
+      // FairShare returns the visitor to /?joined=1#club) and, as a copy with the
+      // first name and consent wording, to our own list at /api/join.
+      // If the FairShare script hasn't loaded, /api/join alone takes the sign-up.
+      if (location.origin !== 'https://trophybingo.com') {
+        document.querySelectorAll('form.join[data-ae-return]').forEach(function (f) {
+          f.setAttribute('data-ae-return', location.origin + '/?joined=1#club');
+        });
+      }
+      if (params.get('joined') === '1') {
+        joined();
+        var clubMsg = document.querySelector('#club .join__msg');
+        if (clubMsg) {
+          clubMsg.className = 'join__msg is-ok';
+          clubMsg.textContent = 'You\u2019re in the pack. Watch your inbox.';
+        }
+        if (window.history && history.replaceState) {
+          params.delete('joined');
+          var q = params.toString();
+          history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
+        }
+      }
+
       document.querySelectorAll('form.join').forEach(function (form) {
         var msg = form.querySelector('.join__msg');
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           var email = form.email.value.trim();
           msg.className = 'join__msg';
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'That email doesn\u2019t look right. Try again?'; msg.classList.add('is-error'); form.email.focus(); return; }
-          if (!form.consent.checked) { msg.textContent = 'Tick the box so Goldie can write to you.'; msg.classList.add('is-error'); return; }
+          var bad = '';
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) bad = 'That email doesn\u2019t look right. Try again?';
+          else if (!form.consent.checked) bad = 'Tick the box so Goldie can write to you.';
+          if (bad) {
+            // Stop FairShare's own submit handler too.
+            e.stopImmediatePropagation();
+            msg.textContent = bad; msg.classList.add('is-error');
+            if (bad.indexOf('email') !== -1) form.email.focus();
+            return;
+          }
           var btn = form.querySelector('button[type=submit]');
-          btn.disabled = true;
+          var viaFairShare = !!window.tbAEJS;
+          if (!viaFairShare) btn.disabled = true;
           msg.textContent = 'Fetching your membership\u2026';
           fetch('/api/join', {
             method: 'POST',
+            keepalive: true,
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({
               email: email,
@@ -402,6 +435,9 @@
             })
           }).then(function (r) { return r.json().catch(function () { return { ok: false }; }); })
             .then(function (res) {
+              // With FairShare live, FairShare carries on from here and brings
+              // the visitor back to /?joined=1#club.
+              if (viaFairShare) { if (res.ok) { joined(); if (window.fbq) fbq('track', 'CompleteRegistration'); } return; }
               btn.disabled = false;
               if (res.ok) {
                 form.reset();
@@ -415,7 +451,7 @@
                 msg.classList.add('is-error');
               }
             })
-            .catch(function () { btn.disabled = false; msg.textContent = 'Something went wrong. Try again?'; msg.classList.add('is-error'); });
+            .catch(function () { if (viaFairShare) return; btn.disabled = false; msg.textContent = 'Something went wrong. Try again?'; msg.classList.add('is-error'); });
         });
       });
 
@@ -516,6 +552,13 @@
         }).observe(gallery);
       }
     })();
+  </script>
+  <!-- FairShare AE Connect (Greenstone Games account, framework 624 / application 166). trophybingo.com must be on the app's allowlist in the FairShare dashboard. -->
+  <script src="https://get.myfairshare.io/framework/js/624" charset="utf-8"></script>
+  <script>
+    function AEJSReady(aeJS) {
+      window.tbAEJS = aeJS;
+    }
   </script>
 </body>
 </html>

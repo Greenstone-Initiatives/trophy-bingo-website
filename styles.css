@@ -893,3 +893,8 @@ a { color: var(--pink-deep); }
 .sso__btn--tt { background: #000; color: #fff; }
 .sso__btn--tt:hover { background: #1a1a1a; }
 .sso__fine { margin: 10px 0 0; font-size: .85rem; color: rgba(255,255,255,.75); }
+
+/* Signed-in members: the form and buttons give way to this line. */
+.club__member { margin: 18px 0 0; font-weight: 600; color: rgba(255,255,255,.85); line-height: 1.5; max-width: 60ch; }
+.club__member a { color: var(--yellow); }
+#club [hidden] { display: none !important; }

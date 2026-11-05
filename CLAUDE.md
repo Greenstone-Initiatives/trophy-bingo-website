@@ -89,6 +89,12 @@ See `README.md`.
   `<li>` stays `hidden` until TikTok is switched on in the FairShare account. Social
   sign-ups go to FairShare only, not to `/api/join`; the fine print under the buttons
   carries the email-updates consent.
+- TikTok's `<li>` also carries `data-preview="tiktok"`: it shows with `?tiktok=1` (remembered for
+  the tab) for testing in TikTok's Sandbox. Once TikTok approves the app, drop `hidden` and `data-preview`.
+- A visitor signed in to FairShare (`aeJS.loggedIn`, via the `tbOnAE` hook the home page's `AEJSReady`
+  calls) sees "You're in the Pack" in place of the form and buttons, with a line linking to unsubscribe
+  (Privacy Center or support@trophybingo.com), and never gets the Join the Pack bar. FairShare's
+  `accessToken` and `ae_session` are stripped from the address bar once signed in.
 - The footer links to the account's FairShare Privacy Center
   (https://get.myfairshare.io/privacycenter/customer/291/166/login).
 - The Privacy Policy's "Website and advertising data" line covers FairShare's

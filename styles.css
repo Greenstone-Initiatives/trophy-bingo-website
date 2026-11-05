@@ -871,3 +871,25 @@ a { color: var(--pink-deep); }
 .policy ul { padding-left: 1.2em; }
 .policy li { margin: 4px 0; }
 .policy a { color: var(--pink-deep); font-weight: 700; word-break: break-word; }
+
+/* ===== Members Club: join with an account (FairShare sign-in) ===== */
+.sso { margin-top: 22px; }
+.sso__or { margin: 0 0 10px; font-family: var(--font-head); font-weight: 600; color: rgba(255,255,255,.88); }
+.sso__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.sso [hidden] { display: none !important; }
+.sso__btn {
+  display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 18px 0 14px;
+  font-family: Roboto, Arial, sans-serif; font-weight: 500; font-size: 15px; line-height: 20px;
+  text-decoration: none; border-radius: 999px; border: 1px solid transparent;
+}
+.sso__btn:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.sso__logo { width: 20px; height: 20px; flex: none; }
+.sso__btn--fb { background: #1877F2; color: #fff; }
+.sso__btn--fb:hover { background: #166FE5; }
+.sso__btn--g { background: #fff; color: #1F1F1F; border-color: #747775; }
+.sso__btn--g:hover { background: #f2f2f2; }
+.sso__btn--ig { background: #fff; color: #1F1F1F; border-color: #747775; }
+.sso__btn--ig:hover { background: #f2f2f2; }
+.sso__btn--tt { background: #000; color: #fff; }
+.sso__btn--tt:hover { background: #1a1a1a; }
+.sso__fine { margin: 10px 0 0; font-size: .85rem; color: rgba(255,255,255,.75); }

@@ -84,6 +84,11 @@ See `README.md`.
   `keepalive`), then FairShare takes over and returns the visitor to `/?joined=1#club`,
   where the club form says thanks. If the FairShare script hasn't loaded, `/api/join`
   alone takes the sign-up. On staging the return URL points at the staging host.
+- Under the club form, "or join with" (`.sso`) shows Facebook, Google and Instagram
+  sign-in buttons (`data-ae-register-link`), returning to `/?joined=1#club`; TikTok's
+  `<li>` stays `hidden` until TikTok is switched on in the FairShare account. Social
+  sign-ups go to FairShare only, not to `/api/join`; the fine print under the buttons
+  carries the email-updates consent.
 - The footer links to the account's FairShare Privacy Center
   (https://get.myfairshare.io/privacycenter/customer/291/166/login).
 - The Privacy Policy's "Website and advertising data" line covers FairShare's

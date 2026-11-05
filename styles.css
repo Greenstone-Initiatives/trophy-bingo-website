@@ -873,7 +873,8 @@ a { color: var(--pink-deep); }
 .policy a { color: var(--pink-deep); font-weight: 700; word-break: break-word; }
 
 /* ===== Members Club: join with an account (FairShare sign-in) ===== */
-.sso { margin-top: 22px; }
+.sso { margin-top: 26px; }
+#club .join__msg:empty { display: none; }
 .sso__or { margin: 0 0 10px; font-family: var(--font-head); font-weight: 600; color: rgba(255,255,255,.88); }
 .sso__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
 .sso [hidden] { display: none !important; }

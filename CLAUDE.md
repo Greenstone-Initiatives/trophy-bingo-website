@@ -64,7 +64,7 @@ See `README.md`.
   live in `dogs.js` (from the game's collections design matrix).
   Faces are `assets/pack/<img>.png` (head sprites with the game's eye sprites fitted); story art is `assets/story/`.
 - Sign-ups also POST to `/api/join` and land in Workers KV as `member:<email>`
-  with the consent wording, timestamp and UTM source. Production store:
+  with the name (the club form asks for full name, `fullName`; `firstName` is its first word), consent wording, timestamp and UTM source. Production store:
   `trophy-bingo-members`; staging store: `trophy-bingo-members-staging`.
 - The consent wording appears in both `index.html` and
   `worker.js`; change them together.

@@ -191,8 +191,8 @@
           <form class="join" data-ae-register-form="email" data-ae-return="https://trophybingo.com/?joined=1#club" novalidate>
             <div class="join__row">
               <label class="join__field">
-                <span>First name</span>
-                <input type="text" name="firstName" autocomplete="given-name" maxlength="60">
+                <span>Name</span>
+                <input type="text" name="fullName" autocomplete="name" maxlength="100">
               </label>
               <label class="join__field">
                 <span>Email</span>
@@ -481,7 +481,8 @@
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({
               email: email,
-              firstName: form.firstName ? form.firstName.value.trim() : '',
+              name: form.fullName ? form.fullName.value.trim() : '',
+              firstName: form.fullName ? form.fullName.value.trim().split(/\s+/)[0] : (form.firstName ? form.firstName.value.trim() : ''),
               consent: form.consent.checked,
               website: form.website.value,
               source: {

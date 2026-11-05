@@ -183,7 +183,7 @@ window.TB_DOGS = [
   },
   {
     "name": "Lilah",
-    "img": "lilah",
+    "img": "lilah-2",
     "breed": "Dalmatian",
     "world": "Beach",
     "kind": "Helper Skill",

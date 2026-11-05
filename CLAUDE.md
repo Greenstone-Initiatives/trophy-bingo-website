@@ -64,7 +64,7 @@ See `README.md`.
   live in `dogs.js` (from the game's collections design matrix).
   Faces are `assets/pack/<img>.png` (head sprites with the game's eye sprites fitted); story art is `assets/story/`.
 - Sign-ups also POST to `/api/join` and land in Workers KV as `member:<email>`
-  with the consent wording, timestamp and UTM source. Production store:
+  with the name (the club form asks for full name, `fullName`; `firstName` is its first word), consent wording, timestamp and UTM source. Production store:
   `trophy-bingo-members`; staging store: `trophy-bingo-members-staging`.
 - The consent wording appears in both `index.html` and
   `worker.js`; change them together.
@@ -84,6 +84,17 @@ See `README.md`.
   `keepalive`), then FairShare takes over and returns the visitor to `/?joined=1#club`,
   where the club form says thanks. If the FairShare script hasn't loaded, `/api/join`
   alone takes the sign-up. On staging the return URL points at the staging host.
+- Under the club form, "or join with" (`.sso`) shows Facebook and Google
+  sign-in buttons (`data-ae-register-link`), returning to `/?joined=1#club`; TikTok's
+  `<li>` stays `hidden` until TikTok is switched on in the FairShare account. Social
+  sign-ups go to FairShare only, not to `/api/join`; the fine print under the buttons
+  carries the email-updates consent.
+- TikTok's `<li>` also carries `data-preview="tiktok"`: it shows with `?tiktok=1` (remembered for
+  the tab) for testing in TikTok's Sandbox. Once TikTok approves the app, drop `hidden` and `data-preview`.
+- A visitor signed in to FairShare (`aeJS.loggedIn`, via the `tbOnAE` hook the home page's `AEJSReady`
+  calls) sees "You're in the Pack" in place of the form and buttons, with a line linking to unsubscribe
+  (Privacy Center or support@trophybingo.com), and never gets the Join the Pack bar. FairShare's
+  `accessToken` and `ae_session` are stripped from the address bar once signed in.
 - The footer links to the account's FairShare Privacy Center
   (https://get.myfairshare.io/privacycenter/customer/291/166/login).
 - The Privacy Policy's "Website and advertising data" line covers FairShare's

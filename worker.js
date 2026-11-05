@@ -76,7 +76,8 @@ async function join(request, env) {
   if (data.website) return reply({ ok: true }, 200, staging);
 
   const email = String(data.email || "").trim().toLowerCase();
-  const firstName = String(data.firstName || "").trim().slice(0, 60);
+  const name = String(data.name || "").trim().slice(0, 100);
+  const firstName = (String(data.firstName || "").trim() || name.split(/\s+/)[0] || "").slice(0, 60);
   const consent = data.consent === true || data.consent === "on" || data.consent === "true";
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email.length > 200) {
     return reply({ ok: false, error: "email" }, 400, staging);
@@ -97,6 +98,7 @@ async function join(request, env) {
   const src = data.source && typeof data.source === "object" ? data.source : {};
   const record = {
     email,
+    name,
     firstName,
     joinedAt: now,
     consent: { given: true, text: CONSENT_TEXT, at: now, country: (request.cf && request.cf.country) || null },

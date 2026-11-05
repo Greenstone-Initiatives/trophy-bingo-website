@@ -188,6 +188,10 @@ a { color: var(--pink-deep); }
     linear-gradient(180deg, rgba(58,43,77,.22), rgba(58,43,77,.42));
 }
 .hero__inner { text-align: center; color: #fff; }
+/* The whole video is a Play link; the copy on top lets clicks through to it. */
+.hero__hit { position: absolute; inset: 0; z-index: 0; }
+.hero__inner { position: relative; z-index: 1; pointer-events: none; }
+.hero__inner a { pointer-events: auto; }
 .hero__tag {
   display: inline-flex;
   align-items: center;
@@ -331,7 +335,8 @@ a { color: var(--pink-deep); }
   .hero__frame { width: 100%; aspect-ratio: auto; display: block; padding-bottom: 36px; box-shadow: none; }
   .hero__video { position: relative; inset: auto; height: auto; aspect-ratio: 16 / 9; display: block; z-index: 0; }
   .hero__scrim { display: none; }
-  .hero__inner { padding-top: 20px; }
+  .hero__hit { bottom: auto; aspect-ratio: 16 / 9; }
+  .hero__inner { padding-top: 20px; pointer-events: auto; }
   .hero p.sub { margin-bottom: 14px; }
   .hero__inner .btn--big { margin-top: 0; }
 }

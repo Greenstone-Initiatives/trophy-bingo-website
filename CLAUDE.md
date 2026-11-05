@@ -48,7 +48,7 @@ See `README.md`.
 - **The page lives at `index.html`** (Help at `help/index.html`). Assets live in `assets/` at
   the root. Don't introduce a `pages/` structure.
 - **The hand-off is the point.** Every Play link (`a.js-play`) opens the iWin
-  game in a new tab; don't re-add an embed. Those clicks fire the Meta Pixel
+  game in a new tab (the hero video itself is one, `.hero__hit`); don't re-add an embed. Those clicks fire the Meta Pixel
   `Lead`/`PlayClicked` events and carry incoming `utm_*` params through to iWin.
 - **Paths are root-absolute** (`/assets/…`, `/styles.css`, `/help/`).
   Canonical, og:url, og:image, robots.txt and sitemap.xml all use

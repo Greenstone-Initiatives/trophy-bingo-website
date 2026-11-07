@@ -30,7 +30,7 @@
        Meta Events Manager, then set META_PIXEL_ID and redeploy. Nothing
        loads or is sent while the ID is empty. -->
   <script>
-    window.META_PIXEL_ID = ""; // <-- paste your Pixel ID here (e.g. "1234567890")
+    window.META_PIXEL_ID = "1825686065373012"; // Meta Pixel for trophybingo.com
     (function () {
       if (!window.META_PIXEL_ID) return;
       if (navigator.globalPrivacyControl) return; // honour Global Privacy Control opt-outs
@@ -41,6 +41,29 @@
         document,'script','https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', window.META_PIXEL_ID);
       fbq('track', 'PageView');
+    })();
+  </script>
+
+  <!-- Google Analytics 4.
+       Tracking is OFF until you paste your Measurement ID below. Create a GA4
+       property in Google Analytics, then set GA4_ID (looks like "G-XXXXXXXXXX")
+       and redeploy. Nothing loads or is sent while the ID is empty, and
+       (like the Meta Pixel) it does not load when the browser sends Global
+       Privacy Control. Geo/market is captured by GA4 automatically; the
+       Play Now click-through is sent as a `play_click` event below. -->
+  <script>
+    window.GA4_ID = "G-XDPYE5E4MD"; // GA4 Measurement ID for trophybingo.com
+    (function () {
+      if (!window.GA4_ID) return;
+      if (navigator.globalPrivacyControl) return; // honour Global Privacy Control opt-outs
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(window.GA4_ID);
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', window.GA4_ID);
     })();
   </script>
   <script src="/dogs.js" defer></script>
@@ -60,7 +83,7 @@
         <a class="navlink hide-mobile" href="https://shop.trophybingo.com/">Shop</a>
         <a class="navlink hide-mobile" href="#club">Members Club</a>
         <a class="navlink hide-mobile" href="/help/">Help</a>
-        <a class="btn btn--sky js-play hide-mobile" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Free ↗</a>
+        <a class="btn btn--sky js-play hide-mobile" data-play-where="header" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Free ↗</a>
         <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu">
           <span></span><span></span><span></span>
         </button>
@@ -72,7 +95,7 @@
       <a href="https://shop.trophybingo.com/">Shop</a>
       <a href="#club">Members Club</a>
       <a href="/help/">Help</a>
-      <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
+      <a class="btn btn--big js-play" data-play-where="menu" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
     </div>
   </header>
 
@@ -84,13 +107,13 @@
           <source src="/assets/hero-v2.mp4" type="video/mp4">
         </video>
         <div class="hero__scrim"></div>
-        <a class="hero__hit js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener" tabindex="-1" aria-label="Play Trophy Bingo free on iWin"></a>
+        <a class="hero__hit js-play" data-play-where="hero-video" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener" tabindex="-1" aria-label="Play Trophy Bingo free on iWin"></a>
 
         <div class="wrap hero__inner">
           <span class="hero__tag">⭐ 4.28 / 5 &nbsp;•&nbsp; Free to play</span>
           <h1>Join Goldie on the bingo adventure of a lifetime!</h1>
           <p class="sub">Team up with Goldie the golden retriever &amp; friends for some bonus bingo fun. Rescue lost dogs, spin the wheel, win big.</p>
-          <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
+          <a class="btn btn--big js-play" data-play-where="hero" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Free on iWin</a>
         </div>
       </div>
     </section>
@@ -118,7 +141,7 @@
         </div>
       </div>
       <div class="wrap story__cta">
-        <a class="btn btn--big js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Start the Rescue</a>
+        <a class="btn btn--big js-play" data-play-where="story" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Start the Rescue</a>
       </div>
     </section>
 
@@ -228,7 +251,7 @@
       <div class="wrap">
         <h2>Ready to Play?</h2>
         <p class="lead">Goldie's waiting on iWin, and it's free to play.</p>
-        <a class="btn btn--big btn--sky js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Trophy Bingo Free</a>
+        <a class="btn btn--big btn--sky js-play" data-play-where="cta" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">▶ Play Trophy Bingo Free</a>
       </div>
     </section>
   </main>
@@ -270,7 +293,7 @@
         <a href="#pack">The Pack</a>
         <a href="#club">Members Club</a>
         <a href="/help/">Help &amp; FAQ</a>
-        <a class="js-play" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Now on iWin</a>
+        <a class="js-play" data-play-where="footer" href="https://iwin.com/free-games/play/trophy-bingo" target="_blank" rel="noopener">Play Now on iWin</a>
       </div>
       <p class="fine">© <span id="yr"></span> <a href="https://greenstone.games/">Greenstone Games</a> · <a href="/terms/">Terms of Service</a> · <a href="/privacy/">Privacy Policy</a> · <a href="https://get.myfairshare.io/privacycenter/customer/291/166/login" target="_blank" rel="noopener">Privacy Center</a></p>
     </div>
@@ -292,12 +315,47 @@
     })();
 
     // Conversion signal: the visitor clicked through to play. Meta can optimise
-    // delivery toward this once the Pixel ID is set.
-    document.querySelectorAll('a.js-play').forEach(function (a) {
-      a.addEventListener('click', function () {
-        if (window.fbq) { fbq('track', 'Lead'); fbq('trackCustom', 'PlayClicked'); }
+    // delivery toward this once the Pixel ID is set; GA4 records it as a
+    // `play_click` event (with the button placement and utm_source) once the
+    // GA4 ID is set. Geo/market is captured by GA4 automatically.
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var utmSource = params.get('utm_source') || '';
+      document.querySelectorAll('a.js-play').forEach(function (a) {
+        a.addEventListener('click', function () {
+          if (window.fbq) { fbq('track', 'Lead'); fbq('trackCustom', 'PlayClicked'); }
+          if (window.gtag) {
+            gtag('event', 'play_click', {
+              placement: a.getAttribute('data-play-where') || 'unknown',
+              utm_source: utmSource
+            });
+          }
+        });
       });
-    });
+    })();
+
+    // Quality signals: tell an engaged visitor from a bounce-and-click.
+    // hero_video_play fires once the hero gameplay video actually starts;
+    // scroll_50 fires once the visitor has scrolled halfway down the page.
+    (function () {
+      var v = document.querySelector('.hero__video');
+      if (v) {
+        var firedVid = false;
+        v.addEventListener('playing', function () {
+          if (firedVid) return; firedVid = true;
+          if (window.gtag) gtag('event', 'hero_video_play');
+        });
+      }
+      var firedScroll = false;
+      window.addEventListener('scroll', function () {
+        if (firedScroll) return;
+        var scrolled = window.scrollY + window.innerHeight;
+        if (scrolled >= document.body.scrollHeight * 0.5) {
+          firedScroll = true;
+          if (window.gtag) gtag('event', 'scroll_50');
+        }
+      }, { passive: true });
+    })();
 
     // ----- Mobile menu -----
     (function () {
@@ -399,7 +457,7 @@
         var clubMsg = document.querySelector('#club .join__msg');
         if (clubMsg) {
           clubMsg.className = 'join__msg is-ok';
-          clubMsg.textContent = 'You\u2019re in the pack. Watch your inbox.';
+          clubMsg.textContent = 'You’re in the pack. Watch your inbox.';
         }
         if (window.history && history.replaceState) {
           params.delete('joined');
@@ -428,9 +486,9 @@
         club.querySelectorAll('form.join, .sso').forEach(function (el) { el.hidden = on; });
         var note = club.querySelector('.club__member');
         if (note) note.hidden = !on;
-        if (clubTitle) clubTitle.textContent = on ? 'You\u2019re in the Pack' : defaults.title;
+        if (clubTitle) clubTitle.textContent = on ? 'You’re in the Pack' : defaults.title;
         if (clubLead) clubLead.innerHTML = on
-          ? 'You\u2019ll get the news first and earn <span class="nb">Trophy Bingo</span> merch made only for the club. Goldie will be in touch.'
+          ? 'You’ll get the news first and earn <span class="nb">Trophy Bingo</span> merch made only for the club. Goldie will be in touch.'
           : defaults.lead;
         if (on) {
           joined();
@@ -463,7 +521,7 @@
           var email = form.email.value.trim();
           msg.className = 'join__msg';
           var bad = '';
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) bad = 'That email doesn\u2019t look right. Try again?';
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) bad = 'That email doesn’t look right. Try again?';
           else if (!form.consent.checked) bad = 'Tick the box so Goldie can write to you.';
           if (bad) {
             // Stop FairShare's own submit handler too.
@@ -475,7 +533,7 @@
           var btn = form.querySelector('button[type=submit]');
           var viaFairShare = !!window.tbAEJS;
           if (!viaFairShare) btn.disabled = true;
-          msg.textContent = 'Fetching your membership\u2026';
+          msg.textContent = 'Fetching your membership…';
           fetch('/api/join', {
             method: 'POST',
             keepalive: true,
@@ -498,14 +556,15 @@
             .then(function (res) {
               // With FairShare live, FairShare carries on from here and brings
               // the visitor back to /?joined=1#club.
-              if (viaFairShare) { if (res.ok) { joined(); if (window.fbq) fbq('track', 'CompleteRegistration'); } return; }
+              if (viaFairShare) { if (res.ok) { joined(); if (window.fbq) fbq('track', 'CompleteRegistration'); if (window.gtag) gtag('event', 'sign_up', { method: 'fairshare' }); } return; }
               btn.disabled = false;
               if (res.ok) {
                 form.reset();
                 joined();
-                msg.textContent = res.already ? 'You\u2019re already in the pack. Good dog.' : 'You\u2019re in the pack. Watch your inbox.';
+                msg.textContent = res.already ? 'You’re already in the pack. Good dog.' : 'You’re in the pack. Watch your inbox.';
                 msg.classList.add('is-ok');
                 if (window.fbq) fbq('track', 'CompleteRegistration');
+                if (window.gtag) gtag('event', 'sign_up', { method: 'email' });
                 if (form.classList.contains('packbar__form')) setTimeout(function () { window.TB_closeBar && window.TB_closeBar(); }, 2600);
               } else {
                 msg.textContent = res.error === 'slow-down' ? 'Easy, tiger. Try again in a minute.' : 'Something went wrong. Try again?';

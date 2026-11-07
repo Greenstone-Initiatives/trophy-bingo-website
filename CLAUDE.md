@@ -125,6 +125,9 @@ See `README.md`.
   service provider is added, and change the date at the top.
 - The Meta Pixel loader skips loading when the browser sends Global Privacy
   Control; the policy promises this, so keep it.
+- Google Analytics 4 (measurement ID G-XDPYE5E4MD, account "Greenstone Games",
+  property "Trophy Bingo") loads on every page from a snippet before </head>,
+  with the same Global Privacy Control skip. Add it to any new page.
 
 ## Preview
 
